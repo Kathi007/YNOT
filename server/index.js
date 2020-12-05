@@ -7,8 +7,11 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/', function(req, res, next) {
-  res.send(data.getData());
+app.get('/projects', function(req, res, next) {
+  res.send(data.getProjects());
+});
+app.get('/employees', function(req, res, next) {
+  res.send(data.getEmployees());
 });
 
 app.listen(3000, () => {
