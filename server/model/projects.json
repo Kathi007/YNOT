@@ -1,19 +1,42 @@
 [
     {
         "projekt_id": "1",
-        "image":"../img/beispielbild.jpg",
+        "image":"img/img-projects/beispielbild.jpg",
         "projektname": "LookUp",
-        "beschreibung": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et",
+        "beschreibung": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, ore eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, ut labore et",
+                        "kurzbeschreibung": "Lorem ipsum dolor sino sea takimatad tempor invidunt ut labore et",
+
         "projekterfinder": "Max Muster",
         "Anforderungen": ["CSS", "HTML", "Javascript"]
     },
     {
         "projekt_id": "2",
-        "image":"../img/beispielbild.jpg",
+        "image":"img/img-projects/beispielbild.jpg",
         "projektname": "HELO",
-        "beschreibung": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et",
+        "beschreibung": "Lorem ipsum dolor sino sea takimata sanctus est Lorem ipsuadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et",
+                "kurzbeschreibung": "Lorem ipsum dolor sino sea takimatad tempor invidunt ut labore et",
+
         "projekterfinder": "Felix Muster",
         "Anforderungen": ["C#", "Python"]
+    },
+    {
+        "projekt_id": "3",
+        "image":"img/img-projects/beispielbild.jpg",
+        "projektname": "KLEE",
+        "beschreibung": "Lorem ipsum dolor sino sea takimata sanctus est Lorem ipsuadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et",
+        "kurzbeschreibung": "Lorem ipsum dolor sino sea takimatad tempor invidunt ut labore et",
+        "projekterfinder": "Anna Muster",
+        "Anforderungen": ["Rasberry PI", "Python"]
+    },
+    {
+        "projekt_id": "4",
+        "image":"img/img-projects/beispielbild.jpg",
+        "projektname": "DILUC",
+        "beschreibung": "Lorem ipsum dolor sino sea takimata sanctus est Lorem ipsuadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et",
+        "kurzbeschreibung": "Lorem ipsum dolor sino sea takimatad tempor invidunt ut labore et",
+
+        "projekterfinder": "Lucas Muster",
+        "Anforderungen": ["Rasberry PI", "Python"]
     }
 
 ]
