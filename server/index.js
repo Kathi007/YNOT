@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 let data = require("./model/projects");
+const PORT = process.env.PORT || '3000'
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -17,6 +18,6 @@ app.get('/users', function(req, res, next) {
   res.send(data.getUserTests());
 });
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log('Server running on port 3000');
 });
