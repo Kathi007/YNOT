@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.d0696aa6701a3ced7f7283cc1450decb.js"
+  "/precache-manifest.736e7588ea679840c7b016e81e782bef.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "ynotcollab"});
