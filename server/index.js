@@ -13,6 +13,9 @@ app.get('/projects', function(req, res, next) {
 app.get('/employees', function(req, res, next) {
   res.send(data.getEmployees());
 });
+app.get('/users', function(req, res, next) {
+  res.send(data.getUserTests());
+});
 
 app.listen(3000, () => {
   console.log('Server running on port 3000');
