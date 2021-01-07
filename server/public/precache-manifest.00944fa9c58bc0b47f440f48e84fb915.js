@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "2fc4054f208b70afdbe7",
+    "revision": "847be5c27e52eda11dc5",
     "url": "/css/app.5faa2ba7.css"
   },
   {
@@ -12,7 +12,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/Logo-gradient.ee80c30b.svg"
   },
   {
-    "revision": "7720bd2fc641abddd08ebf8402774e69",
+    "revision": "fb1a68bbf68921a8df6dcfd3536f3146",
     "url": "/index.html"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js/about.084c04ed.js"
   },
   {
-    "revision": "2fc4054f208b70afdbe7",
-    "url": "/js/app.e1006003.js"
+    "revision": "847be5c27e52eda11dc5",
+    "url": "/js/app.be3c6dab.js"
   },
   {
     "revision": "139a36e906e4a92457be",
