@@ -50,11 +50,10 @@ app.use((req, res, next) => {
 });
 
 //For get requests for projects without specifications: Return List of all Projects
-app.get("/projects", (res, next) => {  
+app.get("/projects", (req, res, next) => {  
   Projects = Project.getAll('Project');
-  res.json(Projects);
-  //ProjectLists = Project.GetAll()
-  //res.json(ProjectLists)
+  var jsonProjects = JSON.stringify(Projects, null, 2);
+  res.send(jsonProjects);
 })
 
 app.listen(3000, () => {
