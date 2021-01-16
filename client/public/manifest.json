@@ -1,0 +1,17 @@
+{
+    "name": "ynotcollab",
+    "short_name": "ynot",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#FAFAFA",
+    "theme_color": "#81045F",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+        "src": "./img/icons/tony.png",
+        "sizes": "256x226",
+        "type": "image/png"
+        }
+    ]
+
+}
