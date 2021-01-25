@@ -226,7 +226,9 @@ CREATE TABLE ynot.project (
     p_maxsize integer,
     p_drivelink text,
     p_language character varying(32),
-    u_userid integer
+    u_userid integer,
+    p_description text,
+    p_image text
 );
 
 
@@ -540,9 +542,9 @@ COPY ynot.message (m_messageid, m_receivetime, m_content, u_userid, p_projectid)
 -- Data for Name: project; Type: TABLE DATA; Schema: ynot; Owner: postgres
 --
 
-COPY ynot.project (p_projectid, p_name, p_maxsize, p_drivelink, p_language, u_userid) FROM stdin;
-1	Ynot-Collab	5	https://drive.google.com/drive/u/0/folders/0ACmDA_ZfNX9kUk9PVA	english	\N
-2	SwapQL	3	bangbros.com	english	\N
+COPY ynot.project (p_projectid, p_name, p_maxsize, p_drivelink, p_language, u_userid, p_description, p_image) FROM stdin;
+1	Ynot-Collab	5	https://drive.google.com/drive/u/0/folders/0ACmDA_ZfNX9kUk9PVA	english	\N	\N	\N
+3	SwapQl	3	drive.google.com	english	\N	\N	\N
 \.
 
 
@@ -633,7 +635,7 @@ SELECT pg_catalog.setval('ynot.message_m_messageid_seq', 3, true);
 -- Name: project_p_projectid_seq; Type: SEQUENCE SET; Schema: ynot; Owner: postgres
 --
 
-SELECT pg_catalog.setval('ynot.project_p_projectid_seq', 2, true);
+SELECT pg_catalog.setval('ynot.project_p_projectid_seq', 3, true);
 
 
 --
