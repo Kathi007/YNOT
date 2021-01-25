@@ -1,4 +1,5 @@
 #! /usr/bin/node
+const { query } = require('express');
 var express = require('express');
 const projects = require('./model/projects');
 var app = express();
@@ -18,29 +19,39 @@ class Project {
   name
   description*/
 
-  constructor(id, name, description)
+  constructor(id, name, maxsize, drivelink, language, description, image, userid)
   {
     this.id = id;
     this.name = name;
+    this.maxsize = maxsize;
+    this.drivelink = drivelink;
+    this.language = language;
     this.description = description;
+    this.image = image;
+    this.userid = userid;
   }
 
   static getAll(Table) {
-    var solution = null;
+    var query={
+      text: 'select * from ynot.Project;',
+      value: [Table]
+    }
 
-    pool.query('SELECT * FROM ynot.'+Table+';', (error, results) => {
+    pool.query(query, (error, results) => {
+      var solution=[];
       if (error) {
-        solution = error;        
+        console.log(error);
+        return null;
       }
-      else {
-        let project1 = results.rows[0];
-        console.log(results.rows[0]);
-        console.log(project1[0]);
-      }        
+      else {       
+        results.rows.forEach(element => {
+          let project = new Map(Object.entries(element));
+          solution.push(new Project(project.get('p_projectid'),project.get('p_name'),project.get('p_maxsize'),project.get('p_drivelink'),project.get('p_language'),project.get('p_description'),project.get('p_image'),project.get('p_userid')));
+        });
+        return solution;
+      }
     })
-
-    var projects = [new Project(1,'YNOT','Project Tinder'), new Project(2,'SwapQL','SQL Swaper'), new Project(3,'WannaSave','Bullshit')];
-    return projects;
+      
   }
 }
 
@@ -50,19 +61,20 @@ app.use((req, res, next) => {
 });
 
 //For get requests for projects without specifications: Return List of all Projects
-app.get("/projects", (req, res, next) => {  
+app.get("/projects", (res, next) => {  
   Projects = Project.getAll('Project');
-  var jsonProjects = JSON.stringify(Projects, null, 2);
-  res.send(jsonProjects);
+  res.json(Projects);
+  //ProjectLists = Project.GetAll()
+  //res.json(ProjectLists)
 })
 
 app.listen(3000, () => {
   console.log('Server running on port 3000');
 
-  allprojects = Project.getAll('Project');
-  console.log('Received all Projects: ', allprojects[0]);
+  let allprojects = Project.getAll('Project');
+  console.log('Received all Projects: ', allprojects);
 
-  newProject = new Project(5, "YNOT", "Matching app for programmers");
+  let newProject = new Project(5, "YNOT", "Matching app for programmers");
   console.log('Created New Project: ', newProject.name);
 });
 
