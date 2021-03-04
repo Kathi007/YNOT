@@ -17,6 +17,11 @@ app.get('/employees', function(req, res, next) {
 app.get('/users', function(req, res, next) {
   res.send(data.getUserTests());
 });
+app.get('*', function(req, res, next) {
+  res.send('notfound');
+});
+
+
 
 
 app.listen(PORT, () => {
