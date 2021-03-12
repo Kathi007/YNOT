@@ -44,7 +44,7 @@
 
         <v-spacer></v-spacer>
         <span class="hidden-xs-only">
-          <v-btn color="grey" text>Profile</v-btn>
+          <v-btn to="/profile" color="grey" text>Profile</v-btn>
           <v-btn color="grey" text>Project</v-btn>
           <v-btn color="grey" text>Messages</v-btn>
         </span>
@@ -102,11 +102,21 @@
           style="float:right;"
           class="mr-10"
           color="pink darken-1"
-          label="Search Users"
+          :label="label"
           v-model="switch1"
+          v-if="switch1 == true"
+        ></v-switch>
+        <v-switch
+          v-else
+          class="mr-10"
+          color="pink darken-1"
+          label="Users"
+          v-model="switch1"
+          style="float:right;"
         ></v-switch>
 
         <SwipeCards :testingcards="projects" />
+        {{error}}
       </v-main>
 
       <!-- <img src="../public/img/icons/Zeichenfläche 1@0.5x.png" fixed> -->
@@ -134,6 +144,8 @@ export default {
       employees: [],
       dialog: false,
       switch1: true,
+      label: 'Projects',
+      error: 'noerror',
     };
   },
   components: {
@@ -143,28 +155,29 @@ export default {
     async getEmployees() {
       try {
         let res = await axios({
-        url: 'http://127.0.0.1:3000/employees',
-        method: 'get',
-      });
-      this.employees = res.data;
+          url: '/employees',
+          method: 'get',
+        });
+        this.employees = res.data;
       } catch (error) {
-        alert(error)
+        console.log(error);
+        this.error = error;
       }
-      
     },
     async getProjects() {
       try {
         let res = await axios({
-        url: 'http://127.0.0.1:3000/projects',
-        method: 'get',
-      });
-      this.projects = res.data;
+          url: '/projects',
+          method: 'get',
+        });
+        this.projects = res.data;
       } catch (error) {
-        alert(error)
+        console.log(error);
+        this.error = error;
       }
-      
     },
   },
+
   created() {
     this.getEmployees();
     this.getProjects();
@@ -172,8 +185,6 @@ export default {
 };
 </script>
 <style>
-.bg {
-}
 #inspire {
   background: none;
 }

@@ -22,14 +22,18 @@
           </div>
 
           <v-spacer></v-spacer>
-
+          <v-avatar class=" mr-7" size="44">
+            <v-img></v-img>
+          </v-avatar>
           <v-btn color="purple" to="/home" dark>DEMO</v-btn>
         </v-app-bar>
         <section id="hero">
           <v-row no-gutters>
             <v-img
               :min-height="'calc(100vh - ' + $vuetify.application.top + 'px)'"
-              src="https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80"
+              src="/img/teamwork.jpg"
+                      gradient="to top right, rgba(48,39,39,.33), rgba(91,37,82,.7)"
+
             >
               <v-theme-provider dark>
                 <v-container fill-height>
@@ -101,21 +105,42 @@
               class="mx-auto title font-weight-light mb-8"
               max-width="720"
             >
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua. At vero eos et accusam et justo duo
-              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-              sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-              invidunt ut labore et dolore magna aliquyam erat, sed diam
-              voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-              Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-              dolor sit amet.
+              YNot is an innovative project made by a team of young and
+              ambitious students of the HTL Wien West. The main idea of the
+              project is to make it easier and faster for interested people in
+              the IT niche to connect with other like-minded people. Our team is
+              currently working on both the front- and the backend of the
+              project. You can follow us on our social media for further
+              information and updates.
             </v-responsive>
 
             <v-avatar class="elevation-12 mb-12" size="128">
-              <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+              <v-img src="../../public/img/Romina.png"></v-img>
             </v-avatar>
+            <v-avatar class="elevation-12 mb-12" size="128">
+              <v-img src="../../public/img/Dominik.jpg"></v-img>
+            </v-avatar>
+            <v-avatar class="elevation-12 mb-12" size="128">
+              <v-img src="../../public/img/Kathrin.png"></v-img>
+            </v-avatar>
+            <v-avatar class="elevation-12 mb-12" size="128">
+              <v-img src="../../public/img/Salem.png"></v-img>
+            </v-avatar>
+            <v-row>
+              <!-- <v-btn
+                type="primary"
+                @click="handleClickDisconnect"
+                :disabled="!isInit"
+                >disconnect</v-btn
+              > -->
+
+              <!-- <v-btn
+                type="primary"
+                @click="handleClickUpdateScope"
+                :disabled="!isInit"
+                >update scope</v-btn
+              > -->
+            </v-row>
           </v-container>
         </section>
         <section id="log-in">
@@ -133,99 +158,38 @@
               </v-responsive>
               <v-row align="center" justify="center" no-gutters>
                 <v-col cols="12" sm="8">
-                  <v-card class="evelation-12 card">
-                    <v-window v-model="step">
-                      <v-window-item :value="1">
-                        <v-row class="fill-height">
-                          <v-col cols="12" md="8" class="pt-6 pb-6">
-                            <v-card-title class="text-center" primary-title>
-                              <span class="headline">{{ currentTitle }}</span>
-                            </v-card-title>
-                            <v-card-text>
-                              <v-text-field
-                                label="Email"
-                                v-model="useremail"
-                              ></v-text-field>
-                              <!-- <p>{{useremail}}</p> -->
-                              <v-text-field
-                                label="Password"
-                                type="password"
-                                v-model="userpassword"
-                              ></v-text-field>
+                  <!-- <v-btn
+                    type="primary"
+                    @click="handleClickLogin"
+                    :disabled="!isInit"
+                    >get authCode</v-btn
+                  > -->
+                  <img src="" alt="" srcset="" />
+                  <v-btn
+                    type="primary"
+                    @click="handleClickSignIn"
+                    v-if="!isSignIn"
+                    :disabled="!isInit"
+                    >sign in with google</v-btn
+                  >
 
-                              <v-btn
-                                :disabled="disable"
-                                @click="checkUser()"
-                                to="/home"
-                                dark
-                                color="purple"
-                                >LogIn</v-btn
-                              >
-                              <!-- <span class="ml-3">Or Sign In with Google!</span>
-                              <v-icon class="mdi mdi-google"></v-icon> -->
-                              <br />
-                              <div class="mt-4">
-                                No Account yet?
-                                <v-btn color="purple" text @click="step = 2"
-                                  >Sign Up!</v-btn
-                                >
-                              </div>
-                            </v-card-text>
-                          </v-col>
-                        </v-row>
-                      </v-window-item>
-
-                      <v-window-item :value="2">
-                        <v-row class="fill-height">
-                          <v-col cols="12" md="8" class="pt-6 pb-6">
-                            <v-card-title class="text-center" primary-title>
-                              <span class="headline">{{ currentTitle }}</span>
-                            </v-card-title>
-                            <v-card-text>
-                              <v-text-field
-                                label="Email"
-                                type="text"
-                              ></v-text-field>
-                              <v-text-field
-                                label="Firstname"
-                                type="text"
-                              ></v-text-field>
-                              <v-text-field
-                                label="Lastname"
-                                type="text"
-                              ></v-text-field>
-                              <v-text-field
-                                label="Password"
-                                type="password"
-                              ></v-text-field>
-                              <!-- <v-radio-group v-model="row" row>
-                                <label class="mr-2">Sign up as</label>
-                                <v-radio
-                                  label="Projectfinder"
-                                  value="radio-1"
-                                ></v-radio>
-                                <v-radio
-                                  label="Projectowner"
-                                  value="radio-2"
-                                ></v-radio>
-                              </v-radio-group> -->
-
-                              <br />
-                              <v-btn to="/home" dark color="purple" class="mt-2"
-                                >Create Account</v-btn
-                              >
-                              <br />
-                              <div class="mt-4">
-                                <v-btn color="purple" icon @click="step = 1"
-                                  ><v-icon>mdi-arrow-left</v-icon></v-btn
-                                >
-                              </div>
-                            </v-card-text>
-                          </v-col>
-                        </v-row>
-                      </v-window-item>
-                    </v-window>
-                  </v-card>
+                  <v-btn
+                    type="primary"
+                    @click="handleClickSignOut"
+                    v-if="isSignIn"
+                    :disabled="!isInit"
+                    >sign out</v-btn
+                  >
+                  <p>{{ profile }}</p>
+                  <br /><br />
+                  <!-- <p>isInit: {{ isInit }}</p>
+                  <p>isSignIn: {{ isSignIn }}</p> -->
+                  <!-- <v-btn
+                    type="primary"
+                    @click="handleClickUpdateScope"
+                    :disabled="!isInit"
+                    >update scope</v-btn
+                  > -->
                 </v-col>
               </v-row>
             </v-container>
@@ -246,33 +210,101 @@
 
 <script>
 import axios from 'axios';
+
 export default {
   data: () => ({
     step: 1,
     icons: ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram'],
     users: [],
+    profile: [],
     disable: true,
     useremail: '',
-    userpassword: '',
+    emailRules: [
+      (v) => !!v || 'E-mail is required',
+      (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+    ],
+    isInit: false,
+    isSignIn: false,
   }),
   methods: {
     async getUsers() {
       let res = await axios({
-        url: 'http://127.0.0.1:3000/users',
+        url: '/users',
         method: 'get',
       });
       this.users = res.data;
     },
-    // checkUser(){
-    //   for (const u of this.users) {
-    //     if (u.Email == this.useremail && u.password == this.userpassword) {
-    //       this.disable = false
-    //       return this.disable
-    //     } else {
-    //       return this.disable
-    //     }
-    //   }
-    // }
+
+    async handleClickUpdateScope() {
+      const option = new window.gapi.auth2.SigninOptionsBuilder();
+      option.setScope('email https://www.googleapis.com/auth/drive.file');
+      const googleUser = this.$gAuth.GoogleAuth.currentUser.get();
+      try {
+        await googleUser.grant(option);
+        console.log('success');
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    handleClickLogin() {
+      this.$gAuth
+        .getAuthCode()
+        .then((authCode) => {
+          //on success
+
+          console.log('authCode', authCode);
+        })
+        .catch(() => {
+          //on fail do something
+        });
+    },
+
+    async handleClickSignIn() {
+      try {
+        const googleUser = await this.$gAuth.signIn();
+        if (!googleUser) {
+          return null;
+        }
+        console.log('googleUser', googleUser);
+        console.log('getId', googleUser.getId());
+        console.log('getBasicProfile', googleUser.getBasicProfile());
+        this.profile.push(googleUser.getBasicProfile());
+
+        console.log('getAuthResponse', googleUser.getAuthResponse());
+        console.log(
+          'getAuthResponse',
+          this.$gAuth.GoogleAuth.currentUser.get().getAuthResponse(),
+        );
+
+        this.isSignIn = this.$gAuth.isAuthorized;
+      } catch (error) {
+        //on fail do something
+        console.error(error);
+        return null;
+      }
+    },
+
+    async handleClickSignOut() {
+      try {
+        await this.$gAuth.signOut();
+        this.isSignIn = this.$gAuth.isAuthorized;
+        console.log('isSignIn', this.$gAuth.isAuthorized);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    handleClickDisconnect() {
+      window.location.href = `https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=${window.location.href}`;
+    },
+    checkConnection() {
+      setTimeout(() => {
+        if (!navigator.onLine) this.offline = true;
+        else this.offline = false;
+        this.checkConnection();
+      }, 1000);
+    },
   },
   computed: {
     currentTitle() {
@@ -288,6 +320,13 @@ export default {
   },
   created() {
     this.getUsers();
+    this.checkConnection();
+    let that = this;
+    let checkGauthLoad = setInterval(function() {
+      that.isInit = that.$gAuth.isInit;
+      that.isSignIn = that.$gAuth.isAuthorized;
+      if (that.isInit) clearInterval(checkGauthLoad);
+    }, 1000);
   },
 };
 </script>
