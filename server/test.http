@@ -1,0 +1,48 @@
+
+//TESTS FOR PROJECT APIS
+
+GET http://127.0.0.1:3001/projects
+###
+GET http://127.0.0.1:3001/projects/0
+###
+DELETE http://127.0.0.1:3001/projets/0
+###
+
+//New Project with all fields
+POST http://127.0.0.1:3001/projects 
+Content-Type: application/json
+
+{
+    "p_projectid": "0",
+    "p_name": "swapql",
+    "p_maxsize": "5",
+    "p_drivelink": "www.google.at",
+    "p_language": "Deutsch",
+    "u_userid": "0"
+}
+
+//New Project with crucial fields
+
+POST http://127.0.0.1:3001/projects 
+Content-Type: application/json
+
+{
+    "p_projectid": "1",
+    "p_name": "wannasave"
+}
+
+###
+DELETE http://127.0.0.1:3001/projets/1
+
+###
+PATCH http://127.0.0.1:3001/projects/0
+Content-Type: application/json
+
+{
+    "p_maxsize": "10",
+    "p_language": "English"
+}
+
+
+
+//TESTS FOR USER APIS
