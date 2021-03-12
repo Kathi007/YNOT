@@ -25,7 +25,7 @@ router.post(
       const result = await insertProject(req.body);
       res.status(result.code).json(result);
     }),
-  );
+);
 
 router.patch(
     '/projects/:id',

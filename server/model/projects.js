@@ -24,16 +24,16 @@ async function getProjects() {  //returns all projects
       };
   }
 
-  //DOMINIK: INSERT SPECIFICS
   async function insertProject(p) {    // create new project
+    console.log(p.p_name);
     await db.query(
       `INSERT INTO ynot.project (p_name, p_maxsize, p_drivelink, p_language, u_userid, p_description)
                              VALUES($1,$2,$3,$4,$5,$6)`,
-      [p.name, p.maxsize, p.drivelink, p.language, p.userid, p.description],
+      [p.p_name, p.p_maxsize, p.p_drivelink, p.p_language, p.u_userid, p.p_description],
     );
     return {
       code: 200,
-      data: p.name,
+      data: p.p_name,
     };
   }
 

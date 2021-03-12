@@ -1,4 +1,6 @@
 #! /usr/bin/node
+console.log("Test");
+
 const express = require('express'); //REST API module
 const morgan = require('morgan'); //Module for logging incoming requests
 const helmet = require('helmet'); //Security module for HTTP
