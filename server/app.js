@@ -1,4 +1,6 @@
 #! /usr/bin/node
+console.log("Test");
+
 const express = require('express'); //REST API module
 const morgan = require('morgan'); //Module for logging incoming requests
 const helmet = require('helmet'); //Security module for HTTP
@@ -24,7 +26,7 @@ app.use('/', userRoutes);
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-const PORT = process.env.PORT ?? 5000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT);
 console.log('Server running on port 5000');

@@ -9,7 +9,7 @@ const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
   database: 'ynotcollab',
-  password: 'Qk37npig!',
+  password: '',
   port: 5432,
 })
 
@@ -31,14 +31,14 @@ class Project {
     this.userid = userid;
   }
 
-  static getAll(Table) {
-    var query={
-      text: 'select * from ynot.Project;',
-      value: [Table]
+  static getAll(Table) { 
+    var query={ // create parametrised query
+      text: 'select * from ynot.$1;',
+      value: ["Project"]
     }
 
     pool.query(query, (error, results) => {
-      var solution=[];
+      var solution=[]; //Array of all Projects
       if (error) {
         console.log(error);
         return null;
@@ -47,8 +47,8 @@ class Project {
         results.rows.forEach(element => {
           let project = new Map(Object.entries(element));
           solution.push(new Project(project.get('p_projectid'),project.get('p_name'),project.get('p_maxsize'),project.get('p_drivelink'),project.get('p_language'),project.get('p_description'),project.get('p_image'),project.get('p_userid')));
+          return solution;
         });
-        return solution;
       }
     })
       
@@ -72,7 +72,13 @@ app.listen(3000, () => {
   console.log('Server running on port 3000');
 
   let allprojects = Project.getAll('Project');
-  console.log('Received all Projects: ', allprojects);
+  if (allprojects == undefined) {
+    console.log("Yeet");
+  }
+  else {
+    console.log('Received all Projects: ', allprojects);
+  }
+  
 
   let newProject = new Project(5, "YNOT", "Matching app for programmers");
   console.log('Created New Project: ', newProject.name);

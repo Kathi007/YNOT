@@ -3,7 +3,7 @@
 const db = require('../db');
 
 async function getProjects() {  //returns all projects
-    const { rows } = await db.query('SELECT * FROM Project');
+    const { rows } = await db.query('SELECT * FROM ynot.project');
     return {
       code: 200,
       data: rows,
@@ -11,7 +11,7 @@ async function getProjects() {  //returns all projects
   }
   
   async function getProject(id) {   //returns project with specific ID
-    const { rows } = await db.query('SELECT * FROM project WHERE projectID = $1', [id]);
+    const { rows } = await db.query('SELECT * FROM ynot.project WHERE p_projectid = $1', [id]);
     if (rows.length > 0)
       return {
         code: 200,
@@ -20,22 +20,20 @@ async function getProjects() {  //returns all projects
     else
       return {
         code: 404,
-        data: `the specified employee ${id} was not found in the database`,
+        data: `the specified Project ${id} was not found in the database`,
       };
   }
 
-  //DOMINIK: INSERT SPECIFICS
   async function insertProject(p) {    // create new project
-    let { rows } = await db.query('SELECT MAX(projectID) AS max FROM project'); //Only works if auto increment standard key
-    let projectID = rows[0].max + 1; //Project ID = Highest + 1
+    console.log(p.p_name);
     await db.query(
-      `INSERT INTO project (projectid, last_name, first_name, title)
-                             VALUES($1,$2,$3,$4)`,
-      [projectID, e.lastName, e.firstName, e.title],
+      `INSERT INTO ynot.project (p_name, p_maxsize, p_drivelink, p_language, u_userid, p_description)
+                             VALUES($1,$2,$3,$4,$5,$6)`,
+      [p.p_name, p.p_maxsize, p.p_drivelink, p.p_language, p.u_userid, p.p_description],
     );
     return {
       code: 200,
-      data: projectID,
+      data: p.p_name,
     };
   }
 
@@ -46,7 +44,7 @@ async function getProjects() {  //returns all projects
     //Key value pairs are "translated" into update statements
     let props = [];
     for (const prop in data) props.push(`${prop} = '${data[prop]}'`);
-    let cmd = `UPDATE project SET ${props.join(',')} WHERE projectID = $1`;
+    let cmd = `UPDATE ynot.project SET ${props.join(',')} WHERE p_projectid = $1`;
     await db.query(cmd, [id]);
   
     return {
@@ -60,9 +58,9 @@ async function getProjects() {  //returns all projects
     if (result.code != 200) return result; //In case of error return message
   
     //DOMINIK: CASCADING DELETE NEEDED
-    const { rows } = await db.query('SELECT * FROM project WHERE projectID = $1', [id]);
+    const { rows } = await db.query('SELECT * FROM ynot.project WHERE projectID = $1', [id]);
     for (const row of rows) {
-      await db.query('DELETE FROM order_details WHERE order_id =$1', [row.order_id]);
+      await db.query('DELETE FROM order_details WHERE order_id = $1', [row.order_id]);
     }
     await db.query('DELETE FROM orders WHERE employee_id = $1', [id]);
     await db.query('DELETE FROM employees WHERE employee_id = $1', [id]);
