@@ -24,7 +24,7 @@ async function getProjects() {  //returns all projects
       };
   }
 
-  async function filterProjects(p) {   //returns Projects fitting a filter
+  async function filterProjects(f) {   //returns Projects fitting a filter
     const {rows} = await db.query(`QUERY`,[]);
     if (rows.length > 0)
       return {
@@ -34,7 +34,7 @@ async function getProjects() {  //returns all projects
     else
       return {
         code: 404,
-        data: `No projects fitting filter ${p} found`,
+        data: `No projects fitting this filter found`,
       };
   }
 
@@ -88,8 +88,9 @@ async function getProjects() {  //returns all projects
   module.exports = {
     getProjects,
     getProject,
+    filterProjects,
     insertProject,
     delProject,
-    patchProject,
+    patchProject
   };
   

@@ -24,6 +24,20 @@ async function getUsers() {  //returns all users
       };
   }
 
+  async function filterUsers(f) {   //returns Users fitting a filter
+    const {rows} = await db.query(`QUERY`,[]);
+    if (rows.length > 0)
+      return {
+        code: 200,
+        data: rows[0],
+      };
+    else
+      return {
+        code: 404,
+        data: `No users fitting this filter found`,
+      };
+  }
+
   //DOMINIK: INSERT SPECIFICS
   async function insertUser(u) {    // create new user
     let { rows } = await db.query('SELECT MAX(employee_id) AS max FROM employees'); //Different logic needed for username creation

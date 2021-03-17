@@ -19,6 +19,14 @@ router.get(
   }),
 );
 
+router.get(
+  '/users/filtered',
+  asyncHandler(async (req, res) => {
+    const result = await filterUsers(req.body);
+    res.status(result.code).json(result);
+  }),
+);
+
 router.post(
     '/users',
     asyncHandler(async (req, res) => {
