@@ -24,6 +24,20 @@ async function getProjects() {  //returns all projects
       };
   }
 
+  async function filterProjects(p) {   //returns Projects fitting a filter
+    const {rows} = await db.query(`QUERY`,[]);
+    if (rows.length > 0)
+      return {
+        code: 200,
+        data: rows[0],
+      };
+    else
+      return {
+        code: 404,
+        data: `No projects fitting filter ${p} found`,
+      };
+  }
+
   async function insertProject(p) {    // create new project
     console.log(p.p_name);
     await db.query(

@@ -5,6 +5,22 @@ GET http://127.0.0.1:3001/projects
 ###
 GET http://127.0.0.1:3001/projects/1
 ###
+GET http://127.0.0.1:3001/projects/filtered
+Content-Type: application/json
+
+{
+    "pl_id": "1",
+    "u_expected_salary": "0",
+    "u_Country": "Au",
+    "u_full_time": "1",
+    "u_zip_code": "1160",
+    "u_timezone(user)": "ME",
+    "co_startdate": "",
+    "co_enddate": "",
+    "i_degree": "DI"
+}
+
+###
 DELETE http://127.0.0.1:3001/projects/1
 ###
 
