@@ -268,7 +268,8 @@ CREATE TABLE ynot.project (
     p_zip_code character varying(5),
     p_full_time boolean,
     p_country character(2),
-    p_time_zone character varying(4)
+    p_time_zone character varying(4),
+    p_short_description text
 );
 
 
@@ -602,9 +603,9 @@ COPY ynot.programming_language (pl_id, pl_name, u_userid, p_projectid) FROM stdi
 -- Data for Name: project; Type: TABLE DATA; Schema: ynot; Owner: postgres
 --
 
-COPY ynot.project (p_projectid, p_name, p_maxsize, p_drivelink, p_language, u_userid, p_description, p_image, p_zip_code, p_full_time, p_country, p_time_zone) FROM stdin;
-1	Ynot-Collab	5	https://drive.google.com/drive/u/0/folders/0ACmDA_ZfNX9kUk9PVA	english	\N	\N	\N	\N	\N	\N	\N
-3	SwapQl	3	drive.google.com	english	\N	\N	\N	\N	\N	\N	\N
+COPY ynot.project (p_projectid, p_name, p_maxsize, p_drivelink, p_language, u_userid, p_description, p_image, p_zip_code, p_full_time, p_country, p_time_zone, p_short_description) FROM stdin;
+1	Ynot-Collab	5	https://drive.google.com/drive/u/0/folders/0ACmDA_ZfNX9kUk9PVA	english	\N	\N	\N	\N	\N	\N	\N	\N
+3	SwapQl	3	drive.google.com	english	\N	\N	\N	\N	\N	\N	\N	\N
 \.
 
 

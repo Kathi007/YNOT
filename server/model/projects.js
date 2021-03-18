@@ -41,9 +41,9 @@ async function getProjects() {  //returns all projects
   async function insertProject(p) {    // create new project
     console.log(p.p_name);
     await db.query(
-      `INSERT INTO ynot.project (p_name, p_maxsize, p_drivelink, p_language, u_userid, p_description, p_zip_code, p_full_time, p_country, p_time_zone)
-                             VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
-      [p.p_name, p.p_maxsize, p.p_drivelink, p.p_language, p.u_userid, p.p_description, p.p_zip_code, p.p_full_time, p.p_country, p.p_time_zone],
+      `INSERT INTO ynot.project (p_name, p_maxsize, p_drivelink, p_language, u_userid, p_description, p_zip_code, p_full_time, p_country, p_time_zone, p_short_description)
+                             VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`,
+      [p.p_name, p.p_maxsize, p.p_drivelink, p.p_language, p.u_userid, p.p_description, p.p_zip_code, p.p_full_time, p.p_country, p.p_time_zone, p.p_short_description],
     );
     return {
       code: 200,
