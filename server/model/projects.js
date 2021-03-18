@@ -41,9 +41,9 @@ async function getProjects() {  //returns all projects
   async function insertProject(p) {    // create new project
     console.log(p.p_name);
     await db.query(
-      `INSERT INTO ynot.project (p_name, p_maxsize, p_drivelink, p_language, u_userid, p_description)
-                             VALUES($1,$2,$3,$4,$5,$6)`,
-      [p.p_name, p.p_maxsize, p.p_drivelink, p.p_language, p.u_userid, p.p_description],
+      `INSERT INTO ynot.project (p_name, p_maxsize, p_drivelink, p_language, u_userid, p_description, p_zip_code, p_full_time, p_country, p_time_zone)
+                             VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
+      [p.p_name, p.p_maxsize, p.p_drivelink, p.p_language, p.u_userid, p.p_description, p.p_zip_code, p.p_full_time, p.p_country, p.p_time_zone],
     );
     return {
       code: 200,
@@ -72,12 +72,15 @@ async function getProjects() {  //returns all projects
     if (result.code != 200) return result; //In case of error return message
   
     //DOMINIK: CASCADING DELETE NEEDED
-    const { rows } = await db.query('SELECT * FROM ynot.project WHERE projectID = $1', [id]);
-    for (const row of rows) {
+    //const { rows } = await db.query('SELECT * FROM ynot.project WHERE p_projectid = $1', [id]);
+    /*for (const row of rows) {
       await db.query('DELETE FROM order_details WHERE order_id = $1', [row.order_id]);
-    }
-    await db.query('DELETE FROM orders WHERE employee_id = $1', [id]);
-    await db.query('DELETE FROM employees WHERE employee_id = $1', [id]);
+    }*/
+    await db.query('DELETE FROM ynot.messages WHERE p_projectid = $1', [id]);
+    await db.query('DELETE FROM ynot.application WHERE p_projectid = $1', [id]);
+    await db.query('DELETE FROM ynot.social_media WHERE p_projectid = $1', [id]);
+    await db.query('DELETE FROM ynot.application WHERE p_projectid = $1', [id]);
+    await db.query('DELETE FROM ynot.project WHERE p_projectid = $1', [id]);
     return {
       code: 200,
       data: true,

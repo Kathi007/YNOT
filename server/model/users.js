@@ -3,7 +3,7 @@
 const db = require('../db');
 
 async function getUsers() {  //returns all users
-    const { rows } = await db.query('SELECT * FROM User');
+    const { rows } = await db.query('SELECT * FROM ynot.user');
     return {
       code: 200,
       data: rows,
@@ -11,7 +11,7 @@ async function getUsers() {  //returns all users
   }
   
   async function getUser(name) {   //returns user with specific username
-    const { rows } = await db.query('SELECT * FROM user WHERE username = $1', [name]);
+    const { rows } = await db.query('SELECT * FROM ynot.user WHERE u_username = $1', [name]);
     if (rows.length > 0)
       return {
         code: 200,
@@ -40,12 +40,11 @@ async function getUsers() {  //returns all users
 
   //DOMINIK: INSERT SPECIFICS
   async function insertUser(u) {    // create new user
-    let { rows } = await db.query('SELECT MAX(employee_id) AS max FROM employees'); //Different logic needed for username creation
-    let employee_id = rows[0].max + 1;
     await db.query(
-      `INSERT INTO user (employee_id, last_name, first_name, title)
-                             VALUES($1,$2,$3,$4)`,
-      [employee_id, e.lastName, e.firstName, e.title],
+      `INSERT INTO user (u_firstname, u_surename, u_email, u_password, u_country, u_expected_salary, u_full_time
+        u_zip_code, u_time_zone) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
+      [u.u_firstname, u.u_surename, u.u_email, u.u_email, u.u_password, u.u_country, u.u_expected_salary, u.u_full_time,
+      u.u_zip_code, u.u_time_zone],
     );
     return {
       code: 200,
@@ -60,7 +59,7 @@ async function getUsers() {  //returns all users
     //Key value pairs are "translated" into update statements
     let props = [];
     for (const prop in data) props.push(`${prop} = '${data[prop]}'`);
-    let cmd = `UPDATE user SET ${props.join(',')} WHERE username = $1`;
+    let cmd = `UPDATE ynot.user SET ${props.join(',')} WHERE u_username = $1`;
     await db.query(cmd, [username]);
   
     return {
@@ -74,12 +73,22 @@ async function getUsers() {  //returns all users
     if (user.code != 200) return user; //In case of error return message
   
     //DOMINIK: CASCADING DELETE NEEDED
-    const { rows } = await db.query('SELECT * FROM user WHERE username = $1', [username]);
-    for (const row of rows) {
-      await db.query('DELETE FROM order_details WHERE order_id =$1', [row.order_id]);
-    }
-    await db.query('DELETE FROM orders WHERE employee_id = $1', [id]);
-    await db.query('DELETE FROM user WHERE username = $1', [username]);
+    const { rows } = await db.query('SELECT u_userid FROM ynot.user WHERE u_username = $1', [username]);
+    /*for (const row of rows) {
+      await db.query('DELETE FROM order_details WHERE order_id = $1', [row.order_id]);
+    }*/
+    await db.query('DELETE FROM ynot.repository WHERE u_userid = $1', [rows[0].u_userid]);
+    await db.query('DELETE FROM ynot.scientific_work WHERE u_userid = $1', [rows[0].u_userid]);
+    await db.query('DELETE FROM ynot.certificate WHERE u_userid = $1', [rows[0].u_userid]);
+    await db.query('DELETE FROM ynot.company WHERE u_userid = $1', [rows[0].u_userid]);
+    await db.query('DELETE FROM ynot.messages WHERE u_userid = $1', [rows[0].u_userid]);
+    await db.query('DELETE FROM ynot.application WHERE u_userid = $1', [rows[0].u_userid]);
+    await db.query('DELETE FROM ynot.company WHERE u_userid = $1', [rows[0].u_userid]);
+    await db.query('DELETE FROM ynot.programming_language WHERE u_userid = $1', [rows[0].u_userid]);
+    await db.query('DELETE FROM ynot.user_project WHERE u_userid = $1', [rows[0].u_userid]);
+    await db.query('DELETE FROM ynot.swiped_by WHERE u_userid = $1', [rows[0].u_userid]);
+    await db.query('DELETE FROM ynot.matched_with WHERE u_userid = $1', [rows[0].u_userid]);
+    await db.query('DELETE FROM ynot.user WHERE u_userid = $1', [rows[0].u_userid]);
     return {
       code: 200,
       data: true,

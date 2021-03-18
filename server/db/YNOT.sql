@@ -217,6 +217,42 @@ ALTER SEQUENCE ynot.message_m_messageid_seq OWNED BY ynot.message.m_messageid;
 
 
 --
+-- Name: programming_language; Type: TABLE; Schema: ynot; Owner: postgres
+--
+
+CREATE TABLE ynot.programming_language (
+    pl_id integer NOT NULL,
+    pl_name character varying(32),
+    u_userid integer,
+    p_projectid integer
+);
+
+
+ALTER TABLE ynot.programming_language OWNER TO postgres;
+
+--
+-- Name: programming_language_pl_id_seq; Type: SEQUENCE; Schema: ynot; Owner: postgres
+--
+
+CREATE SEQUENCE ynot.programming_language_pl_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE ynot.programming_language_pl_id_seq OWNER TO postgres;
+
+--
+-- Name: programming_language_pl_id_seq; Type: SEQUENCE OWNED BY; Schema: ynot; Owner: postgres
+--
+
+ALTER SEQUENCE ynot.programming_language_pl_id_seq OWNED BY ynot.programming_language.pl_id;
+
+
+--
 -- Name: project; Type: TABLE; Schema: ynot; Owner: postgres
 --
 
@@ -228,7 +264,11 @@ CREATE TABLE ynot.project (
     p_language character varying(32),
     u_userid integer,
     p_description text,
-    p_image text
+    p_image text,
+    p_zip_code character varying(5),
+    p_full_time boolean,
+    p_country character(2),
+    p_time_zone character varying(4)
 );
 
 
@@ -388,7 +428,12 @@ CREATE TABLE ynot."user" (
     u_firstname character varying(128),
     u_surename character varying(128),
     u_email character varying(256) NOT NULL,
-    password character(64) NOT NULL
+    u_password character(64) NOT NULL,
+    u_country character(2),
+    u_expected_salary integer,
+    u_full_time boolean,
+    u_zip_code character varying(5),
+    u_time_zone character varying(4)
 );
 
 
@@ -461,6 +506,13 @@ ALTER TABLE ONLY ynot.educational_institution ALTER COLUMN i_institutionid SET D
 --
 
 ALTER TABLE ONLY ynot.message ALTER COLUMN m_messageid SET DEFAULT nextval('ynot.message_m_messageid_seq'::regclass);
+
+
+--
+-- Name: programming_language pl_id; Type: DEFAULT; Schema: ynot; Owner: postgres
+--
+
+ALTER TABLE ONLY ynot.programming_language ALTER COLUMN pl_id SET DEFAULT nextval('ynot.programming_language_pl_id_seq'::regclass);
 
 
 --
@@ -539,12 +591,20 @@ COPY ynot.message (m_messageid, m_receivetime, m_content, u_userid, p_projectid)
 
 
 --
+-- Data for Name: programming_language; Type: TABLE DATA; Schema: ynot; Owner: postgres
+--
+
+COPY ynot.programming_language (pl_id, pl_name, u_userid, p_projectid) FROM stdin;
+\.
+
+
+--
 -- Data for Name: project; Type: TABLE DATA; Schema: ynot; Owner: postgres
 --
 
-COPY ynot.project (p_projectid, p_name, p_maxsize, p_drivelink, p_language, u_userid, p_description, p_image) FROM stdin;
-1	Ynot-Collab	5	https://drive.google.com/drive/u/0/folders/0ACmDA_ZfNX9kUk9PVA	english	\N	\N	\N
-3	SwapQl	3	drive.google.com	english	\N	\N	\N
+COPY ynot.project (p_projectid, p_name, p_maxsize, p_drivelink, p_language, u_userid, p_description, p_image, p_zip_code, p_full_time, p_country, p_time_zone) FROM stdin;
+1	Ynot-Collab	5	https://drive.google.com/drive/u/0/folders/0ACmDA_ZfNX9kUk9PVA	english	\N	\N	\N	\N	\N	\N	\N
+3	SwapQl	3	drive.google.com	english	\N	\N	\N	\N	\N	\N	\N
 \.
 
 
@@ -584,7 +644,7 @@ COPY ynot.swiped_by (u_userid, u_swipeduser) FROM stdin;
 -- Data for Name: user; Type: TABLE DATA; Schema: ynot; Owner: postgres
 --
 
-COPY ynot."user" (u_userid, u_username, u_firstname, u_surename, u_email, password) FROM stdin;
+COPY ynot."user" (u_userid, u_username, u_firstname, u_surename, u_email, u_password, u_country, u_expected_salary, u_full_time, u_zip_code, u_time_zone) FROM stdin;
 \.
 
 
@@ -629,6 +689,13 @@ SELECT pg_catalog.setval('ynot.educational_institution_i_institutionid_seq', 1, 
 --
 
 SELECT pg_catalog.setval('ynot.message_m_messageid_seq', 3, true);
+
+
+--
+-- Name: programming_language_pl_id_seq; Type: SEQUENCE SET; Schema: ynot; Owner: postgres
+--
+
+SELECT pg_catalog.setval('ynot.programming_language_pl_id_seq', 1, false);
 
 
 --
@@ -720,6 +787,14 @@ ALTER TABLE ONLY ynot.swiped_by
 
 ALTER TABLE ONLY ynot.user_project
     ADD CONSTRAINT pk_userproject PRIMARY KEY (u_userid, p_projectid);
+
+
+--
+-- Name: programming_language programming_language_pkey; Type: CONSTRAINT; Schema: ynot; Owner: postgres
+--
+
+ALTER TABLE ONLY ynot.programming_language
+    ADD CONSTRAINT programming_language_pkey PRIMARY KEY (pl_id);
 
 
 --
@@ -888,6 +963,22 @@ ALTER TABLE ONLY ynot.user_project
 
 ALTER TABLE ONLY ynot.user_project
     ADD CONSTRAINT fk_userprojectuser FOREIGN KEY (u_userid) REFERENCES ynot."user"(u_userid);
+
+
+--
+-- Name: programming_language projetid_fk; Type: FK CONSTRAINT; Schema: ynot; Owner: postgres
+--
+
+ALTER TABLE ONLY ynot.programming_language
+    ADD CONSTRAINT projetid_fk FOREIGN KEY (p_projectid) REFERENCES ynot.project(p_projectid);
+
+
+--
+-- Name: programming_language userid_fk; Type: FK CONSTRAINT; Schema: ynot; Owner: postgres
+--
+
+ALTER TABLE ONLY ynot.programming_language
+    ADD CONSTRAINT userid_fk FOREIGN KEY (u_userid) REFERENCES ynot."user"(u_userid);
 
 
 --
