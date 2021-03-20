@@ -50,3 +50,7 @@ Content-Type: application/json
 }
 
 //TESTS FOR USER APIS
+
+
+//TESTS FOR MATCH APIS
+GET http://127.0.0.1:3001/matches/1

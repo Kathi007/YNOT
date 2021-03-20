@@ -8,6 +8,7 @@ const path = require('path'); //Allows compressed Webapp BE to be saved in publi
 require('colors'); 
 const projectRoutes = require('./routes/projectRoutes');
 const userRoutes = require('./routes/userRoutes');
+const matchRoutes = require('./routes/matchRoutes');
 const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
 require('dotenv').config();
 
@@ -23,10 +24,11 @@ app.use(express.json());
 
 app.use('/', projectRoutes);
 app.use('/', userRoutes);
+app.use('/', matchRoutes)
 app.use(notFoundHandler);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT);
-console.log('Server running on port 5000');
+console.log(`Server running on port ${process.env.PORT}`);
