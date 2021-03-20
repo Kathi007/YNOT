@@ -19,10 +19,20 @@ async function getMatch(id) {  //returns specific match
 
 async function getMatches(u_id) {  //returns matches for user
     const { rows } = await db.query('QUERY');
-    return {
-      code: 200,
-      data: rows,
-    };
+    if (rows.length > 0)
+    {
+      return {
+        code: 200,
+        data: rows,
+      };
+    }
+    else
+    {
+      return {
+        code: 404,
+        data: 'No matches found for user',
+      };
+    }
   }
   
   async function checkMatch(c_id, e_id) {   //  Checks if creater & employee have a match
@@ -44,7 +54,7 @@ async function getMatches(u_id) {  //returns matches for user
     if (isMatch.data == "true")
     {
         await db.query(
-            `INSERT QUERY`,
+            `INSERT MATCH QUERY`,
             [c_id, e_id],
           );
 
@@ -55,10 +65,15 @@ async function getMatches(u_id) {  //returns matches for user
     }
     else
     {
-        return {
-            code: 200,
-            data: "false",
-          };
+      await db.query(
+        `INSERT SWIPE QUERY`,
+        [c_id, e_id],
+      );
+
+      return {
+          code: 200,
+          data: "false",
+        };
     }
   }
 
