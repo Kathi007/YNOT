@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler');
 const router = express.Router();
 const { getUsers, getUser, insertUser, delUser, patchUser } = require('../model/users');
 
+//Get all Users
 router.get(
   '/users',
   asyncHandler(async (req, res) => {
@@ -11,6 +12,7 @@ router.get(
   }),
 );
 
+//Get User by ID 
 router.get(
   '/users/:id',
   asyncHandler(async (req, res) => {
@@ -19,6 +21,7 @@ router.get(
   }),
 );
 
+//Get users filtered by specified requirements
 router.get(
   '/users/filtered',
   asyncHandler(async (req, res) => {
@@ -27,6 +30,15 @@ router.get(
   }),
 );
 
+//Get projects for specified user
+router.get(
+  '/users/projects/:u_id',
+  asyncHandler(async (req, res) => {
+    const result = await getUserProjects(req.params.u_id)
+  }),
+);
+
+//Add new user with specified attributes
 router.post(
     '/users',
     asyncHandler(async (req, res) => {
@@ -35,6 +47,7 @@ router.post(
     }),
   );
 
+//Change user criteria
 router.patch(
     '/users/:id',
     asyncHandler(async (req, res) => {
@@ -43,6 +56,7 @@ router.patch(
     }),
 );
 
+//Remove user
 router.delete(
   '/users/:id',
   asyncHandler(async (req, res) => {
