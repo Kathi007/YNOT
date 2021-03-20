@@ -1,7 +1,8 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
 const router = express.Router();
-const { getProjects, getProject, insertProject, patchProject, delProject} = require('../model/projects');
+const { getProjects, getProject, getUserProjects, getCreatedProjects, getSuggestedProjects, filterProjects, insertProject, patchProject, delProject} = require('../model/projects'); //ADD NEW FUNCTIONS
+
 
 //Get all projects
 router.get(
@@ -21,6 +22,36 @@ router.get(
   }),
 );
 
+//Get projects specified user works in
+router.get(
+  '/projects/employs/:u_id',
+  asyncHandler(async (req, res) => {
+    const result = await getUserProjects(req.params.u_id);
+    res.status(result.code).json(result);
+  }),
+);
+
+//Get projects created by specified user
+router.get(
+  '/projects/createdby/:u_id',
+  asyncHandler(async (req, res) => {
+    const result = await getCreatedProjects(req.params.u_id);
+    res.status(result.code).json(result);
+  }),
+);
+
+//Get suggested projects for specified user
+router.get(
+  '/projects/suggestedto/:u_id',
+  asyncHandler(async (req, res) => {
+    const result = await getSuggestedProjects(req.params.u_id);
+    res.status(result.code).json(result);
+  }),
+);
+
+//HOPEFULLY NOT NEEDED:
+
+/*
 //Get filtered Projects
 router.get(
   '/projects/filtered',
@@ -29,7 +60,9 @@ router.get(
     res.status(result.code).json(result);
   }),
 );
+*/
 
+//Add project
 router.post(
     '/projects',
     asyncHandler(async (req, res) => {
@@ -38,6 +71,7 @@ router.post(
     }),
 );
 
+//
 router.patch(
     '/projects/:id',
     asyncHandler(async (req, res) => {
