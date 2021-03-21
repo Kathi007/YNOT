@@ -25,7 +25,14 @@ async function getUsers() {  //returns all users
   }
 
   async function filterUsers(f) {   //returns Users fitting a filter
-    const {rows} = await db.query(`QUERY`,[]);
+    // use stored function for the dates
+    const {rows} = await db.query(`SELECT * FROM ynot.user u 
+    join ynot.programming_language pl using (u_userid) 
+    join ynot.company co using(u_userid)
+    join ynot.educationial_institution i using(u_userid) 
+    WHERE (u.u_country = $1 AND u.u_time_zone = $2 AND u.u_zip_code = $3 AND u.u_expected_salary = $4
+      AND u.full_time = $5 AND pl.pl_name = $6 AND i.i_degree = $7 AND sum(year(co.co_startdate) - year(co.co_enddate)) = $8`
+      ,[f.uc,f.utz,f.uzc,f.ues,f.uft,f.pln,f.ide,f.ex]);
     if (rows.length > 0)
       return {
         code: 200,

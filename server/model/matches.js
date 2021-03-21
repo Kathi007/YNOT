@@ -2,8 +2,8 @@
 
 const db = require('../db');
 
-async function getMatch(id) {  //returns specific match
-    const { rows } = await db.query('QUERY', [id]);
+async function getMatch(ids) {  //returns specific match
+    const { rows } = await db.query('SELECT * FROM ynot.matched_with WHERE (u_userid = $1 AND p_projectid = $2', [ids.u_id,ids.p_id]);
     if (rows.length > 0)
       return {
         code: 200,
@@ -18,7 +18,7 @@ async function getMatch(id) {  //returns specific match
 
 
 async function getMatches(u_id) {  //returns matches for user
-    const { rows } = await db.query('QUERY');
+    const { rows } = await db.query('SELECT * FROM ynot.matched_with WHERE u_userid = $1',[u_id]);
     if (rows.length > 0)
     {
       return {
@@ -36,7 +36,7 @@ async function getMatches(u_id) {  //returns matches for user
   }
   
   async function checkMatch(c_id, e_id) {   //  Checks if creater & employee have a match
-    const { rows } = await db.query('QUERY', [c_id, e_id]);
+    const { rows } = await db.query('SELECT * FROM ynot.matched_with WHERE p_projectid = $1', [c_id, e_id]);
     if (rows.length > 0)
       return {
         code: 200,
@@ -49,15 +49,17 @@ async function getMatches(u_id) {  //returns matches for user
       };
   }
 
-  async function insertMatch(c_id, e_id) {    //    For right swipes: create new match if appropriate
-    const isMatch = await checkMatch(c_id, e_id);
+  async function insertMatch(u_id,p_id) {    //    For right swipes: create new match if appropriate
+    const isMatch = await checkMatch(u_id,p_id);
     if (isMatch.data == "true")
     {
         await db.query(
-            `INSERT MATCH QUERY`,
-            [c_id, e_id],
+            `INSERT INTO ynot.matched_with (u_userid,p_project) VALUES ($1,$2)`,
+            [u_id,p_id],
           );
-
+        await db.query(
+            `DELETE FROM ynot.swiped_by WHERE (u_userid = $1 AND p_projectid = $2)`,[u_id,p_id]
+        );
         return {
             code: 200,
             data: "true",
@@ -66,8 +68,8 @@ async function getMatches(u_id) {  //returns matches for user
     else
     {
       await db.query(
-        `INSERT SWIPE QUERY`,
-        [c_id, e_id],
+        `INSERT INTO ynot.swiped_by (u_userid,p_projectid) VALUES ($1,$2)`,
+        [u_id, p_id],
       );
 
       return {
@@ -77,12 +79,12 @@ async function getMatches(u_id) {  //returns matches for user
     }
   }
 
-  async function delMatch(id) {   //deletes match with specified id
-    const match = await getMatch(id);
+  async function delMatch(u_id,p_id) {   //deletes match with specified id
+    const match = await getMatch(u_id,p_id);
     if (result.code != 200) return result; //In case of error return message
     else
     {
-        const { rows } = await db.query('DELETE STATEMENT', [id]);
+        const { rows } = await db.query('DELETE FROM ynot.matched_with WHERE (u_userid = $1 AND p_projectid = $2)', [u_id,p_id]);
         return {
           code: 200,
           data: id,
@@ -97,5 +99,4 @@ async function getMatches(u_id) {  //returns matches for user
     checkMatch,
     insertMatch,
     delMatch
-  };
-  
+  };  

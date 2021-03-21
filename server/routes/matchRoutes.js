@@ -15,9 +15,9 @@ router.get(
 
 //Get specific match
 router.get(
-  '/matches/:id',
+  '/matches',
   asyncHandler(async (req, res) => {
-    const result = await getMatch(req.params.id);
+    const result = await getMatch(req.body);
     res.status(result.code).json(result);
   }),
 );
