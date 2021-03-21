@@ -24,6 +24,47 @@ async function getUsers() {  //returns all users
       };
   }
 
+  async function getUserInProject(p_id) {   //returns users working in specified project
+    const { rows } = await db.query('QUERY', [p_id]);
+    if (rows.length > 0)
+      return {
+        code: 200,
+        data: rows[0],
+      };
+    else
+      return {
+        code: 404,
+        data: `Employed Users for this project not found in database`,
+      };
+  }
+
+  async function getSuggestedUsers(p_id) {    //returns suggested users for specified project
+    	//Get project criteria
+      const { rows } = await db.query('PROJECT CRITERIA QUERY', [p_id]);
+      if(rows.length > 0)
+      {
+        //Get users fitting project criteria
+        const { userRows } = await filterUsers(rows);
+        if(projectRows.length > 0)
+          return {
+            code: 200,
+            data: userRows,
+          };
+        else
+          return {
+            code: 404,
+            data: `Users fitting this projects criteria not found in database`,
+          };
+      }
+      else
+      {
+        return {
+          code: 404,
+          data: `Matching criteria for this project not found in the database`,
+        };
+      }
+  }
+
   async function filterUsers(f) {   //returns Users fitting a filter
     // use stored function for the dates
     const {rows} = await db.query(`SELECT * FROM ynot.user u 
@@ -106,6 +147,9 @@ async function getUsers() {  //returns all users
   module.exports = {
     getUsers,
     getUser,
+    getUserInProject,
+    getSuggestedUsers,
+    filterUsers,
     insertUser,
     delUser,
     patchUser,

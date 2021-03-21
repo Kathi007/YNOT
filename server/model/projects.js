@@ -24,6 +24,61 @@ async function getProjects() {  //returns all projects
       };
   }
 
+  async function getUserProjects(u_id) {
+    const { rows } = await db.query('QUERY', [u_id]);
+    if (rows.length > 0)
+      return {
+        code: 200,
+        data: rows[0],
+      };
+    else
+      return {
+        code: 404,
+        data: `No projects employeeing this user found`,
+      };
+  }
+
+  async function getCreatedProjects(u_id) { //returns projects created by specified user
+    const { rows } = await db.query('QUERY', [u_id]);
+    if (rows.length > 0)
+      return {
+        code: 200,
+        data: rows[0],
+      };
+    else
+      return {
+        code: 404,
+        data: `No Projects created by user found`,
+      };
+  }
+
+  async function getSuggestedProjects(u_id) {   //returns projects fitting specified users criteria
+    	//Get user criteria
+      const { rows } = await db.query('USER CRITERIA QUERY', [u_id]);
+      if(rows.length > 0)
+      {
+        //Get projects with user criteria
+        const { projectRows } = await filterProjects(rows);
+        if(projectRows.length > 0)
+          return {
+            code: 200,
+            data: projectRows,
+          };
+        else
+          return {
+            code: 404,
+            data: `No projects fitting this criteria found`,
+          };
+      }
+      else
+      {
+        return {
+          code: 404,
+          data: `Matching criteria for this user not found in the database`,
+        };
+      }
+  }
+
   async function filterProjects(f) {   //returns Projects fitting a filter
     const {rows} = await db.query(`QUERY`,[]);
     if (rows.length > 0)
@@ -37,6 +92,7 @@ async function getProjects() {  //returns all projects
         data: `No projects fitting this filter found`,
       };
   }
+
 
   async function insertProject(p) {    // create new project
     console.log(p.p_name);
@@ -91,6 +147,9 @@ async function getProjects() {  //returns all projects
   module.exports = {
     getProjects,
     getProject,
+    getUserProjects,
+    getCreatedProjects,
+    getSuggestedProjects,
     filterProjects,
     insertProject,
     delProject,
