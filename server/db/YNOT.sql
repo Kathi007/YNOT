@@ -269,7 +269,9 @@ CREATE TABLE ynot.project (
     p_full_time boolean,
     p_country character(2),
     p_time_zone character varying(4),
-    p_short_description text
+    p_short_description text,
+    p_experience integer,
+    p_degree character varying(8)
 );
 
 
@@ -603,9 +605,19 @@ COPY ynot.programming_language (pl_id, pl_name, u_userid, p_projectid) FROM stdi
 -- Data for Name: project; Type: TABLE DATA; Schema: ynot; Owner: postgres
 --
 
-COPY ynot.project (p_projectid, p_name, p_maxsize, p_drivelink, p_language, u_userid, p_description, p_image, p_zip_code, p_full_time, p_country, p_time_zone, p_short_description) FROM stdin;
-1	Ynot-Collab	5	https://drive.google.com/drive/u/0/folders/0ACmDA_ZfNX9kUk9PVA	english	\N	\N	\N	\N	\N	\N	\N	\N
-3	SwapQl	3	drive.google.com	english	\N	\N	\N	\N	\N	\N	\N	\N
+COPY ynot.project (p_projectid, p_name, p_maxsize, p_drivelink, p_language, u_userid, p_description, p_image, p_zip_code, p_full_time, p_country, p_time_zone, p_short_description, p_experience, p_degree) FROM stdin;
+1	Ynot-Collab	5	https://drive.google.com/drive/u/0/folders/0ACmDA_ZfNX9kUk9PVA	english	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
+3	SwapQl	3	drive.google.com	english	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
+14	YNOT	10	drive.google.com	english	11	lorem ipsum dolor	\N	55555	t	AT	+01	lorem ipsum	\N	\N
+15	SwapQL	9	drive.google.com	english	2	lorem ipsum dolor	\N	54545	t	GB	+00	lorem ipsum	\N	\N
+16	WannaSave	5	drive.google.com	english	5	lorem ipsum dolor	\N	65355	t	AT	+01	lorem ipsum	\N	\N
+17	SimplyDesign	4	drive.google.com	english	11	lorem ipsum dolor	\N	12345	f	US	+10	lorem ipsum	\N	\N
+18	YNOT2	6	drive.google.com	english	9	lorem ipsum dolor	\N	54321	t	CE	+01	lorem ipsum	\N	\N
+19	SwapQl2	9	drive.google.com	english	3	lorem ipsum dolor	\N	77777	f	DE	+01	lorem ipsum	\N	\N
+20	WannaSave2	2	drive.google.com	english	4	lorem ipsum dolor	\N	10101	t	GB	+00	lorem ipsum	\N	\N
+21	SimplyDesign2	4	drive.google.com	english	7	lorem ipsum dolor	\N	3001	t	PL	-01	lorem ipsum	\N	\N
+22	YNOT3	12	drive.google.com	english	2	lorem ipsum dolor	\N	10000	t	AT	+01	lorem ipsum	\N	\N
+23	SwapQl3	5	drive.google.com	english	11	lorem ipsum dolor	\N	55555	f	SW	+01	lorem ipsum	\N	\N
 \.
 
 
@@ -646,6 +658,16 @@ COPY ynot.swiped_by (u_userid, u_swipeduser) FROM stdin;
 --
 
 COPY ynot."user" (u_userid, u_username, u_firstname, u_surename, u_email, u_password, u_country, u_expected_salary, u_full_time, u_zip_code, u_time_zone) FROM stdin;
+2	Cheryl0	Cheryl	Fuller	Cheryl.Fuller@smith.org	abc                                                             	LT	2387	f	51292	+01
+3	Rebecca1	Rebecca	Taylor	Rebecca.Taylor@warren-cherry.org	abc                                                             	MH	1762	t	60049	+01
+4	Francisco2	Francisco	Mcintosh	Francisco.Mcintosh@richardson.com	abc                                                             	DO	4623	t	76996	+01
+5	Kathleen3	Kathleen	Kemp	Kathleen.Kemp@rivas-nelson.biz	abc                                                             	KP	2396	f	03122	+01
+6	Frances4	Frances	Fields	Frances.Fields@phillips-jones.com	abc                                                             	UA	1520	f	92884	+01
+7	Bruce5	Bruce	Ford	Bruce.Ford@wilson.com	abc                                                             	ZA	1612	t	60953	+01
+8	Daniel6	Daniel	Day	Daniel.Day@cook.com	abc                                                             	AL	4951	f	09467	+01
+9	Alexander7	Alexander	Gibbs	Alexander.Gibbs@henderson.com	abc                                                             	IE	3368	t	96003	+01
+10	John8	John	Dunn	John.Dunn@martin.net	abc                                                             	SA	4858	f	01723	+01
+11	Ryan9	Ryan	Maldonado	Ryan.Maldonado@vang-stafford.biz	abc                                                             	TG	1405	f	94827	+01
 \.
 
 
@@ -703,7 +725,7 @@ SELECT pg_catalog.setval('ynot.programming_language_pl_id_seq', 1, false);
 -- Name: project_p_projectid_seq; Type: SEQUENCE SET; Schema: ynot; Owner: postgres
 --
 
-SELECT pg_catalog.setval('ynot.project_p_projectid_seq', 3, true);
+SELECT pg_catalog.setval('ynot.project_p_projectid_seq', 23, true);
 
 
 --
@@ -731,7 +753,7 @@ SELECT pg_catalog.setval('ynot.social_media_so_socialid_seq', 1, false);
 -- Name: user_u_userid_seq; Type: SEQUENCE SET; Schema: ynot; Owner: postgres
 --
 
-SELECT pg_catalog.setval('ynot.user_u_userid_seq', 1, false);
+SELECT pg_catalog.setval('ynot.user_u_userid_seq', 11, true);
 
 
 --
