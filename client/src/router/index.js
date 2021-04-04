@@ -4,15 +4,22 @@ import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
 import Profile from '../views/Profile.vue';
 import Chat from '../views/Chat.vue';
+import Detail from '../views/Details.vue';
+
 
 Vue.use(VueRouter);
 
 const routes = [
-  
   {
     path: '/home',
     name: 'Home',
     component: Home,
+  },
+  {
+    path: '/detail/:id',
+    name: 'Detail',
+    component: Detail,
+    props: true,
   },
   {
     path: '/about',

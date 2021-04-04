@@ -8,7 +8,7 @@
               <v-list-item-title>Profile</v-list-item-title>
             </v-list-item>
             <v-list-item>
-              <v-list-item-title>My Project</v-list-item-title>
+              <v-list-item-title>Sign Up</v-list-item-title>
             </v-list-item>
             <v-list-item>
               <v-list-item-title>Messages</v-list-item-title>
@@ -45,7 +45,7 @@
         <v-spacer></v-spacer>
         <span class="hidden-xs-only">
           <v-btn to="/profile" color="grey" text>Profile</v-btn>
-          <v-btn color="grey" text>Project</v-btn>
+          <v-btn color="grey" text>Sign Up</v-btn>
           <v-btn to="/chat" color="grey" text>Messages</v-btn>
         </span>
       </v-app-bar>
@@ -62,7 +62,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      sidebar: false,
+    }
+  },
+};
 </script>
 
 <style lang="scss" scoped></style>

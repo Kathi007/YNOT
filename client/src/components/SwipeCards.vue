@@ -22,7 +22,7 @@
       >
         <div style="height: 100%">
           <!-- <img :src="current.image" class="rounded-borders" /> -->
-          
+
           <div class="text">
             <v-card-title primary-title>
               {{ current.p_name }}
@@ -42,7 +42,16 @@
             </v-card-text>
 
             <v-card-actions>
-              <v-btn color="purple" outlined width="75%">KNOW MORE</v-btn>
+              <v-btn
+                absolute
+                bottom
+                :style="{ left: '50%', transform: 'translateX(-50%)'}"
+                color="purple"
+                outlined
+                width="75%"
+                :to="`/detail/${current.p_projectid}`"
+                >KNOW MORE</v-btn
+              >
             </v-card-actions>
           </div>
         </div>
@@ -55,10 +64,10 @@
     >
       <div style="height: 100%">
         <!-- <img :src="current.image" class="rounded-borders" /> -->
-        
+
         <div class="text">
           <v-card-title primary-title>
-            {{ next.p_name}}
+            {{ next.p_name }}
           </v-card-title>
           <v-card-title class="subtitle-1">
             Requirements:
@@ -75,12 +84,21 @@
           </v-card-text>
 
           <v-card-actions>
-            <v-btn color="purple" outlined width="55%">KNOW MORE</v-btn>
+            <v-btn
+                absolute
+                bottom
+                :style="{ left: '50%', transform: 'translateX(-50%)'}"
+                color="purple"
+                outlined
+                width="75%"
+                :to="`/detail/${next.p_projectid}`"
+                >KNOW MORE</v-btn
+              >
           </v-card-actions>
         </div>
       </div>
     </div>
-  
+
     <div class="footer fixed">
       <v-btn class="mr-10" icon color="purple" @click="reject"
         ><v-icon>mdi-heart-off</v-icon></v-btn
@@ -128,17 +146,14 @@ export default {
     match() {
       InteractEventBus.$emit(EVENTS.MATCH);
       console.log('match');
-      
     },
     reject() {
       InteractEventBus.$emit(EVENTS.REJECT);
       console.log('rejected');
-      
     },
     skip() {
       InteractEventBus.$emit(EVENTS.SKIP);
       console.log('skip');
-      
     },
     emitAndNext(event) {
       this.$emit(event, this.index);
@@ -158,7 +173,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .footer {
   bottom: 0;
   left: 50%;
@@ -208,7 +222,6 @@ export default {
       0 20px 31px 3px rgba(152, 50, 50, 0.14),
       0 8px 38px 7px rgba(0, 0, 0, 0.12);
   }
-  
 }
 
 .transition {
