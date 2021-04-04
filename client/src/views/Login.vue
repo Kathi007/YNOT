@@ -25,15 +25,13 @@
           <v-avatar class=" mr-7" size="44">
             <v-img></v-img>
           </v-avatar>
-          <v-btn color="purple" to="/home" dark>DEMO</v-btn>
         </v-app-bar>
         <section id="hero">
           <v-row no-gutters>
             <v-img
               :min-height="'calc(100vh - ' + $vuetify.application.top + 'px)'"
               src="/img/teamwork.jpg"
-                      gradient="to top right, rgba(48,39,39,.33), rgba(91,37,82,.7)"
-
+              gradient="to top right, rgba(48,39,39,.33), rgba(91,37,82,.7)"
             >
               <v-theme-provider dark>
                 <v-container fill-height>
@@ -164,7 +162,7 @@
                     :disabled="!isInit"
                     >get authCode</v-btn
                   > -->
-                  <img src="" alt="" srcset="" />
+                  <!-- <img src="" alt="" srcset="" />
                   <v-btn
                     type="primary"
                     @click="handleClickSignIn"
@@ -180,7 +178,7 @@
                     :disabled="!isInit"
                     >sign out</v-btn
                   >
-                  <p>{{ profile }}</p>
+                  <p>{{ username }}</p> -->
                   <br /><br />
                   <!-- <p>isInit: {{ isInit }}</p>
                   <p>isSignIn: {{ isSignIn }}</p> -->
@@ -190,6 +188,16 @@
                     :disabled="!isInit"
                     >update scope</v-btn
                   > -->
+
+                  <v-btn
+                    class="loginBtn w-full my-1 bg-black disabled:bg-opacity-50 hover:bg-opacity-50 text-white py-4 px-4 rounded-md mt-20"
+                    ref="signinBtn"
+                    @click="handleGoogle"
+                    :disabled="!isInit"
+                  >
+                    <span v-if="isInit">Continue with Google</span>
+                    <span v-else>Loading...</span>
+                  </v-btn>
                 </v-col>
               </v-row>
             </v-container>
@@ -209,94 +217,50 @@
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios';
+/* eslint-disable */
 
 export default {
   data: () => ({
     step: 1,
     icons: ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram'],
-    users: [],
     profile: [],
     disable: true,
     useremail: '',
-    emailRules: [
-      (v) => !!v || 'E-mail is required',
-      (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-    ],
     isInit: false,
-    isSignIn: false,
+    // isSignIn: false,
+    username: '',
+    mode: 'login',
   }),
+  created() {
+    // this.getUsers();
+    this.checkConnection();
+    let that = this;
+    let checkGauthLoad = setInterval(function() {
+      that.isInit = that.$gAuth.isInit;
+      // that.isSignIn = that.$gAuth.isAuthorized;
+      if (that.isInit) clearInterval(checkGauthLoad);
+    }, 1000);
+  },
   methods: {
-    async getUsers() {
-      let res = await axios({
-        url: '/users',
-        method: 'get',
-      });
-      this.users = res.data;
-    },
+    async handleGoogle() {
+      this.isInit = false;
+      let authCode = null;
 
-    async handleClickUpdateScope() {
-      const option = new window.gapi.auth2.SigninOptionsBuilder();
-      option.setScope('email https://www.googleapis.com/auth/drive.file');
-      const googleUser = this.$gAuth.GoogleAuth.currentUser.get();
       try {
-        await googleUser.grant(option);
-        console.log('success');
-      } catch (error) {
-        console.log(error);
+        authCode = await this.$gAuth.getAuthCode();
+      } catch (err) {
+        if (err.error == 'popup_closed_by_user') this.isInit = true;
+        return;
       }
-    },
 
-    handleClickLogin() {
-      this.$gAuth
-        .getAuthCode()
-        .then((authCode) => {
-          //on success
-
-          console.log('authCode', authCode);
-        })
-        .catch(() => {
-          //on fail do something
-        });
-    },
-
-    async handleClickSignIn() {
-      try {
-        const googleUser = await this.$gAuth.signIn();
-        if (!googleUser) {
-          return null;
-        }
-        console.log('googleUser', googleUser);
-        console.log('getId', googleUser.getId());
-        console.log('getBasicProfile', googleUser.getBasicProfile());
-        this.profile.push(googleUser.getBasicProfile());
-
-        console.log('getAuthResponse', googleUser.getAuthResponse());
-        console.log(
-          'getAuthResponse',
-          this.$gAuth.GoogleAuth.currentUser.get().getAuthResponse(),
-        );
-
-        this.isSignIn = this.$gAuth.isAuthorized;
-      } catch (error) {
-        //on fail do something
-        console.error(error);
-        return null;
-      }
-    },
-
-    async handleClickSignOut() {
-      try {
-        await this.$gAuth.signOut();
-        this.isSignIn = this.$gAuth.isAuthorized;
-        console.log('isSignIn', this.$gAuth.isAuthorized);
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    handleClickDisconnect() {
-      window.location.href = `https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=${window.location.href}`;
+      // const res = await axios.post(
+      //   `${process.env.VUE_APP_API_URL}/google/token`,
+      //   { authCode: authCode }
+      // );
+      // this.$store.dispatch("setToken", res.data);
+      // this.$store.dispatch("setUser", res.data.user);
+      this.$router.replace(this.$route.query.redirect || '/home');
     },
     checkConnection() {
       setTimeout(() => {
@@ -306,29 +270,11 @@ export default {
       }, 1000);
     },
   },
-  computed: {
-    currentTitle() {
-      switch (this.step) {
-        case 1:
-          return 'Sign In';
-        case 2:
-          return 'Sign Up';
-        default:
-          return 'Sign In';
-      }
-    },
-  },
-  created() {
-    this.getUsers();
-    this.checkConnection();
-    let that = this;
-    let checkGauthLoad = setInterval(function() {
-      that.isInit = that.$gAuth.isInit;
-      that.isSignIn = that.$gAuth.isAuthorized;
-      if (that.isInit) clearInterval(checkGauthLoad);
-    }, 1000);
-  },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.loginBtn:disabled {
+  opacity: 0.5;
+}
+</style>

@@ -116,7 +116,7 @@
         ></v-switch>
 
         <SwipeCards :testingcards="projects" />
-        {{error}}
+        {{ error }}
       </v-main>
 
       <!-- <img src="../public/img/icons/Zeichenfläche 1@0.5x.png" fixed> -->
@@ -152,10 +152,10 @@ export default {
     SwipeCards,
   },
   methods: {
-    async getEmployees() {
+    async getUsers() {
       try {
         let res = await axios({
-          url: '/employees',
+          url: 'http://127.0.0.1:3001/users',
           method: 'get',
         });
         this.employees = res.data;
@@ -167,10 +167,11 @@ export default {
     async getProjects() {
       try {
         let res = await axios({
-          url: '/projects',
+          url: 'http://127.0.0.1:3001/projects',
           method: 'get',
         });
-        this.projects = res.data;
+        this.projects = res.data.data;
+        console.log(this.projects);
       } catch (error) {
         console.log(error);
         this.error = error;
@@ -179,7 +180,7 @@ export default {
   },
 
   created() {
-    this.getEmployees();
+    this.getUsers();
     this.getProjects();
   },
 };

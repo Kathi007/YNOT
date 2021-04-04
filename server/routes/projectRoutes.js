@@ -3,7 +3,10 @@ const asyncHandler = require('express-async-handler');
 const router = express.Router();
 const { getProjects, getProject, getUserProjects, getCreatedProjects, getSuggestedProjects, filterProjects, insertProject, patchProject, delProject} = require('../model/projects'); //ADD NEW FUNCTIONS
 
-
+router.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 //Get all projects
 router.get(
   '/projects',

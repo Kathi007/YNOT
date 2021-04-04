@@ -8,6 +8,7 @@ import Chat from '../views/Chat.vue';
 Vue.use(VueRouter);
 
 const routes = [
+  
   {
     path: '/home',
     name: 'Home',

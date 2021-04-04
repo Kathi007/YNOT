@@ -25,20 +25,20 @@
           
           <div class="text">
             <v-card-title primary-title>
-              {{ current.projektname }}
+              {{ current.p_name }}
             </v-card-title>
             <v-card-title class="subtitle-1">
               Requirements:
             </v-card-title>
             <v-card-text>
-              {{ current.Anforderungen.join(', ') }}
+              {{ current.p_zip_code }}
             </v-card-text>
             <v-divider></v-divider>
             <v-card-title class="subtitle-1">
               Short description:
             </v-card-title>
             <v-card-text>
-              {{ current.kurzbeschreibung }}
+              {{ current.p_short_description }}
             </v-card-text>
 
             <v-card-actions>
@@ -58,20 +58,20 @@
         
         <div class="text">
           <v-card-title primary-title>
-            {{ next.projektname }}
+            {{ next.p_name}}
           </v-card-title>
           <v-card-title class="subtitle-1">
             Requirements:
           </v-card-title>
           <v-card-text>
-            {{ next.Anforderungen.join(', ') }}
+            {{ next.p_zip_code }}
           </v-card-text>
           <v-divider></v-divider>
           <v-card-title class="subtitle-1">
             Short description:
           </v-card-title>
           <v-card-text>
-            {{ next.kurzbeschreibung }}
+            {{ next.p_short_description }}
           </v-card-text>
 
           <v-card-actions>
@@ -114,22 +114,6 @@ export default {
         draggedLeft: EVENTS.REJECT,
         draggedUp: EVENTS.SKIP,
       },
-      // cards: [
-      //   { src: 'karina.jpg', name: 'Karina', age: 7 },
-      //   { src: 'alexander.jpg', name: 'Alexander', age: 5 },
-      //   { src: 'bona.jpg', name: 'Bona', age: 3 },
-      //   { src: 'ichi.jpg', name: 'Ichi', age: 7 },
-      //   { src: 'lloyd.jpg', name: 'Lloyd', age: 4 },
-      //   { src: 'luiza.jpg', name: 'Luiza', age: 9 },
-      //   { src: 'max.jpg', name: 'Max', age: 6 },
-      //   { src: 'mona.jpg', name: 'Mona', age: 3 },
-      //   { src: 'naru.jpg', name: 'Naru', age: 7 },
-      //   { src: 'ramdan.jpg', name: 'Ramdan', age: 8 },
-      //   { src: 'rikki-austin.jpg', name: 'Rikki Austin', age: 3 },
-      //   { src: 'tucker.jpg', name: 'Tucker', age: 9 },
-      //   { src: 'uriel.jpg', name: 'Uriel', age: 6 },
-      //   { src: 'zoe.jpg', name: 'Zoe', age: 2 },
-      // ],
     };
   },
   computed: {
@@ -143,12 +127,18 @@ export default {
   methods: {
     match() {
       InteractEventBus.$emit(EVENTS.MATCH);
+      console.log('match');
+      
     },
     reject() {
       InteractEventBus.$emit(EVENTS.REJECT);
+      console.log('rejected');
+      
     },
     skip() {
       InteractEventBus.$emit(EVENTS.SKIP);
+      console.log('skip');
+      
     },
     emitAndNext(event) {
       this.$emit(event, this.index);
@@ -161,7 +151,7 @@ export default {
   },
   props: {
     testingcards: {
-      type: Array,
+      type: Object,
     },
   },
 };
