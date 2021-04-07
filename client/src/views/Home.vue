@@ -115,6 +115,7 @@
         ></v-switch>
 
         <SwipeCards :testingcards="projects" />
+        <!-- <SwipeCardsUsers :testingcards="users" /> -->
       </v-main>
 
       <!-- <img src="../public/img/icons/Zeichenfläche 1@0.5x.png" fixed> -->

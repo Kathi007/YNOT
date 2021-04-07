@@ -51,9 +51,7 @@
       </v-app-bar>
 
       <v-main>
-          <v-card>
-              
-          </v-card>
+         <h1>{{ $store.state.user.name }}</h1>
       </v-main>
     </v-app>
 

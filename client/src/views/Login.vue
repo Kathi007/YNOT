@@ -125,19 +125,7 @@
               <v-img src="../../public/img/Salem.png"></v-img>
             </v-avatar>
             <v-row>
-              <!-- <v-btn
-                type="primary"
-                @click="handleClickDisconnect"
-                :disabled="!isInit"
-                >disconnect</v-btn
-              > -->
-
-              <!-- <v-btn
-                type="primary"
-                @click="handleClickUpdateScope"
-                :disabled="!isInit"
-                >update scope</v-btn
-              > -->
+            
             </v-row>
           </v-container>
         </section>
@@ -223,17 +211,14 @@
 export default {
   data: () => ({
     step: 1,
-    icons: ['mdi-facebook', 'mdi-twitter', 'mdi-linkedin', 'mdi-instagram'],
     profile: [],
     disable: true,
-    useremail: '',
     isInit: false,
-    // isSignIn: false,
+    isSignIn: false,
     username: '',
     mode: 'login',
   }),
   created() {
-    // this.getUsers();
     this.checkConnection();
     let that = this;
     let checkGauthLoad = setInterval(function() {
@@ -245,23 +230,39 @@ export default {
   methods: {
     async handleGoogle() {
       this.isInit = false;
-      let authCode = null;
 
       try {
         authCode = await this.$gAuth.getAuthCode();
+        const googleUser = await this.$gAuth.signIn();
+        if (!googleUser) {
+          return null;
+        }
+        const auth2 = gapi.auth2.getAuthInstance();
+        if (auth2.isSignedIn.get()) {
+          var profile = auth2.currentUser.get().getBasicProfile();
+          console.log('ID: ' + profile.getId());
+          console.log('Full Name: ' + profile.getName());
+          console.log('Given Name: ' + profile.getGivenName());
+          console.log('Family Name: ' + profile.getFamilyName());
+          console.log('Image URL: ' + profile.getImageUrl());
+          console.log('Email: ' + profile.getEmail());
+          this.username = profile.getName();
+        }
+        this.isSignIn = this.$gAuth.isAuthorized;
       } catch (err) {
         if (err.error == 'popup_closed_by_user') this.isInit = true;
         return;
       }
-
       // const res = await axios.post(
       //   `${process.env.VUE_APP_API_URL}/google/token`,
-      //   { authCode: authCode }
+      //   { authCode: authCode },
       // );
-      // this.$store.dispatch("setToken", res.data);
-      // this.$store.dispatch("setUser", res.data.user);
+      this.$store.dispatch('setUser', profile);
       this.$router.replace(this.$route.query.redirect || '/home');
+      console.log(profile);
+      
     },
+
     checkConnection() {
       setTimeout(() => {
         if (!navigator.onLine) this.offline = true;

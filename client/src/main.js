@@ -3,14 +3,12 @@ import App from './App.vue';
 import './registerServiceWorker';
 import router from './router';
 import vuetify from './plugins/vuetify';
-
-// import installElement from './plugins/element/installElement.js';
 import GAuth from 'vue-google-oauth2';
 import installElement from './plugins/element/installElement.js';
+import store from './store';
 
 Vue.config.productionTip = false;
 Vue.use(installElement);
-
 
 // Vue.use(GAuth, {
 //   clientId:
@@ -29,5 +27,6 @@ Vue.use(GAuth, gauthOption);
 new Vue({
   router,
   vuetify,
+  store,
   render: (h) => h(App),
 }).$mount('#app');
