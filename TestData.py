@@ -28,6 +28,8 @@ class User():
     def WriteInDb(self,conn):
         with conn:
             with conn.cursor() as curs:
+                curs.execute("DELETE FROM ynot.project")
+                curs.execute("DELETE FROM ynot.user")
                 curs.execute("INSERT INTO ynot.user(u_username,u_firstname,u_surename,u_email,u_password,\
                 u_country,u_expected_salary,u_full_time,u_zip_code,u_time_zone)\
                 values(%(un)s,%(fn)s,%(sn)s,%(e)s,%(pw)s,%(c)s,%(es)s,%(ft)s,%(zc)s,%(tz)s)",{"un":self.username,
@@ -66,8 +68,8 @@ with conn:
         print(cursor.fetchall())
 """
 
-for i in range(10):
+for i in range(10000):
     firstname = faker.first_name()
     lastname = faker.last_name()
-    User("{0}{1}".format(firstname,i),firstname,lastname,faker.domain_name(),"abc",faker.country_code(),random.randint(1000,5000),bool(random.randint(0,1)),faker.postcode(),"+01")
+    u = User("{0}{1}".format(firstname,i),firstname,lastname,faker.domain_name(),"abc",faker.country_code(),random.randint(1000,5000),bool(random.randint(0,1)),faker.postcode(),"+01")
     u.WriteInDb(conn)
