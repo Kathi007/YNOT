@@ -59,7 +59,7 @@ async function getProjects() {  //returns all projects
       {
         //Get projects with user criteria
         const { projectRows } = await filterProjects(rows);
-        if(projectRows.length > 0)
+        if(projectRows.code != 404)
           return {
             code: 200,
             data: projectRows,

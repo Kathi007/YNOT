@@ -17,9 +17,9 @@ router.get(
 
 //Get user by Username
 router.get(
-  '/users/:uname',
+  '/users/:id',
   asyncHandler(async (req, res) => {
-    const result = await getUser(req.params.uname);
+    const result = await getUser(req.params.id);
     res.status(result.code).json(result);
   }),
 );
@@ -59,6 +59,14 @@ router.post(
       res.status(result.code).json(result);
     }),
   );
+
+router.post(
+  '/users/signin',
+  asyncHandler(async (req, res) => {
+    const result = await signIn(req.body);
+    res.status(result.code).json(result);
+  }),
+);
 
 //Change user criteria
 router.patch(

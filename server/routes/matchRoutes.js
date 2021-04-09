@@ -7,7 +7,8 @@ router.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   next();
 });
-//Get all matches for a user
+
+//Get all matches of a user
 router.get(
   '/matches/user/:id',
   asyncHandler(async (req, res) => {
@@ -25,7 +26,7 @@ router.get(
   }),
 );
 
-//Add match (right swipe)
+//Right Swipe (Add Swipe/Match)
 router.post(
     '/matches',
     asyncHandler(async (req, res) => {

@@ -2,21 +2,6 @@
 
 const db = require('../db');
 
-async function getMatch(ids) {  //returns specific match
-    const { rows } = await db.query('SELECT * FROM ynot.matched_with WHERE (u_userid = $1 AND p_projectid = $2', [ids.u_id,ids.p_id]);
-    if (rows.length > 0)
-      return {
-        code: 200,
-        data: rows[0],
-      };
-    else
-      return {
-        code: 404,
-        data: `Match not found`,
-      };
-  }
-
-
 async function getMatches(u_id) {  //returns matches for user
     const { rows } = await db.query('SELECT * FROM ynot.matched_with WHERE u_userid = $1',[u_id]);
     if (rows.length > 0)
@@ -33,6 +18,20 @@ async function getMatches(u_id) {  //returns matches for user
         data: 'No matches found for user',
       };
     }
+  }
+
+  async function getMatch(ids) {  //returns specific match
+    const { rows } = await db.query('SELECT * FROM ynot.matched_with WHERE (u_userid = $1 AND p_projectid = $2', [ids.u_id,ids.p_id]);
+    if (rows.length > 0)
+      return {
+        code: 200,
+        data: rows[0],
+      };
+    else
+      return {
+        code: 404,
+        data: `Match not found`,
+      };
   }
   
   async function checkMatch(c_id, e_id) {   //  Checks if creater & employee have a match

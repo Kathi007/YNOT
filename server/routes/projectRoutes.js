@@ -52,19 +52,6 @@ router.get(
   }),
 );
 
-//HOPEFULLY NOT NEEDED:
-
-/*
-//Get filtered Projects
-router.get(
-  '/projects/filtered',
-  asyncHandler(async (req, res) => {
-    const result = await filterProjects(req.body);
-    res.status(result.code).json(result);
-  }),
-);
-*/
-
 //Add project
 router.post(
     '/projects',

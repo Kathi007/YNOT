@@ -10,7 +10,21 @@ async function getUsers() {  //returns all users
     };
   }
   
-  async function getUser(name) {   //returns user with specific username
+  async function getUser(id) {   //returns user with specific username
+    const { rows } = await db.query('SELECT * FROM ynot.user WHERE u_userid = $1', [id]);
+    if (rows.length > 0)
+      return {
+        code: 200,
+        data: rows[0],
+      };
+    else
+      return {
+        code: 404,
+        data: `the specified employee ${id} was not found in the database`,
+      };
+  }
+
+  async function getUserByName(name) {   //returns user with specific username
     const { rows } = await db.query('SELECT * FROM ynot.user WHERE u_username = $1', [name]);
     if (rows.length > 0)
       return {
@@ -86,7 +100,6 @@ async function getUsers() {  //returns all users
       };
   }
 
-  //DOMINIK: INSERT SPECIFICS
   async function insertUser(u) {    // create new user
     await db.query(
       `INSERT INTO user (u_firstname, u_surename, u_email, u_password, u_country, u_expected_salary, u_full_time
@@ -98,6 +111,38 @@ async function getUsers() {  //returns all users
       code: 200,
       data: employee_id,
     };
+  }
+
+  async function signIn(uData) {
+    //check if username & password match
+    const { rows }  = await db.query(`PASSWORD QUERY FOR UNAME`, [uData.u_userid],);
+    if(rows[0] == uData.u_password)
+    {
+      const {userinfo} = await getUserByName(uData.u_username);
+      if(userinfo.code != 404)
+      {
+        return {
+          code: 200,
+          data: userinfo,
+        };
+      }
+      else
+      {
+        return {
+          code: 500,
+          data: 'Server Error',
+        };
+      }
+    }
+
+    else
+    {
+      return {
+        code: 403,
+        data: 'Wrong credentials',
+      };    
+    }
+    
   }
 
   async function patchUser(username, data) {   //Change existing User
@@ -120,7 +165,6 @@ async function getUsers() {  //returns all users
     const user = await getUser(username);
     if (user.code != 200) return user; //In case of error return message
   
-    //DOMINIK: CASCADING DELETE NEEDED
     const { rows } = await db.query('SELECT u_userid FROM ynot.user WHERE u_username = $1', [username]);
     /*for (const row of rows) {
       await db.query('DELETE FROM order_details WHERE order_id = $1', [row.order_id]);
