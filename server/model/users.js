@@ -139,7 +139,7 @@ async function getUsers() {  //returns all users
     {
       return {
         code: 403,
-        data: 'Wrong credentials',
+        data: 'Invalid credentials',
       };    
     }
     
