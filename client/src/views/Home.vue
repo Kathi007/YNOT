@@ -8,7 +8,7 @@
               <v-list-item-title>Profile</v-list-item-title>
             </v-list-item>
             <v-list-item>
-              <v-list-item-title>My Project</v-list-item-title>
+              <v-list-item-title>Sign Up</v-list-item-title>
             </v-list-item>
             <v-list-item>
               <v-list-item-title>Messages</v-list-item-title>
@@ -19,7 +19,6 @@
 
       <v-app-bar
         color="grey lighten-5"
-        dark
         app
         class="default-layout__navbar"
         extended
@@ -45,7 +44,7 @@
         <v-spacer></v-spacer>
         <span class="hidden-xs-only">
           <v-btn to="/profile" color="grey" text>Profile</v-btn>
-          <v-btn color="grey" text>Project</v-btn>
+          <v-btn color="grey" text>Sign Up</v-btn>
           <v-btn to="/chat" color="grey" text>Messages</v-btn>
         </span>
         <!-- open dialog -->
@@ -116,7 +115,7 @@
         ></v-switch>
 
         <SwipeCards :testingcards="projects" />
-        {{error}}
+        <!-- <SwipeCardsUsers :testingcards="users" /> -->
       </v-main>
 
       <!-- <img src="../public/img/icons/Zeichenfläche 1@0.5x.png" fixed> -->
@@ -141,7 +140,7 @@ export default {
       drawer: null,
       icons: ['mdi-instagram'],
       projects: [],
-      employees: [],
+      users: [],
       dialog: false,
       switch1: true,
       label: 'Projects',
@@ -152,13 +151,13 @@ export default {
     SwipeCards,
   },
   methods: {
-    async getEmployees() {
+    async getUsers() {
       try {
         let res = await axios({
-          url: '/employees',
+          url: 'http://127.0.0.1:3001/users',
           method: 'get',
         });
-        this.employees = res.data;
+        this.users = res.data;
       } catch (error) {
         console.log(error);
         this.error = error;
@@ -167,10 +166,11 @@ export default {
     async getProjects() {
       try {
         let res = await axios({
-          url: '/projects',
+          url: 'http://127.0.0.1:3001/projects',
           method: 'get',
         });
-        this.projects = res.data;
+        this.projects = res.data.data;
+        console.log(this.projects);
       } catch (error) {
         console.log(error);
         this.error = error;
@@ -179,7 +179,7 @@ export default {
   },
 
   created() {
-    this.getEmployees();
+    this.getUsers();
     this.getProjects();
   },
 };

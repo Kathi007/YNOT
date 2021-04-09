@@ -2,7 +2,10 @@ const express = require('express');
 const asyncHandler = require('express-async-handler');
 const router = express.Router();
 const { getUsers, getUser, getUserInProject, getSuggestedUsers, filterUsers, delUser, patchUser } = require('../model/users');
-
+router.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 //Get all users
 router.get(
   '/users',

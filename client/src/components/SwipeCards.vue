@@ -22,27 +22,36 @@
       >
         <div style="height: 100%">
           <!-- <img :src="current.image" class="rounded-borders" /> -->
-          
+
           <div class="text">
             <v-card-title primary-title>
-              {{ current.projektname }}
+              {{ current.p_name }}
             </v-card-title>
             <v-card-title class="subtitle-1">
               Requirements:
             </v-card-title>
             <v-card-text>
-              {{ current.Anforderungen.join(', ') }}
+              {{ current.p_zip_code }}
             </v-card-text>
             <v-divider></v-divider>
             <v-card-title class="subtitle-1">
               Short description:
             </v-card-title>
             <v-card-text>
-              {{ current.kurzbeschreibung }}
+              {{ current.p_short_description }}
             </v-card-text>
 
             <v-card-actions>
-              <v-btn color="purple" outlined width="75%">KNOW MORE</v-btn>
+              <v-btn
+                absolute
+                bottom
+                :style="{ left: '50%', transform: 'translateX(-50%)'}"
+                color="purple"
+                outlined
+                width="75%"
+                :to="`/detail/${current.p_projectid}`"
+                >KNOW MORE</v-btn
+              >
             </v-card-actions>
           </div>
         </div>
@@ -55,32 +64,41 @@
     >
       <div style="height: 100%">
         <!-- <img :src="current.image" class="rounded-borders" /> -->
-        
+
         <div class="text">
           <v-card-title primary-title>
-            {{ next.projektname }}
+            {{ next.p_name }}
           </v-card-title>
           <v-card-title class="subtitle-1">
             Requirements:
           </v-card-title>
           <v-card-text>
-            {{ next.Anforderungen.join(', ') }}
+            {{ next.p_zip_code }}
           </v-card-text>
           <v-divider></v-divider>
           <v-card-title class="subtitle-1">
             Short description:
           </v-card-title>
           <v-card-text>
-            {{ next.kurzbeschreibung }}
+            {{ next.p_short_description }}
           </v-card-text>
 
           <v-card-actions>
-            <v-btn color="purple" outlined width="55%">KNOW MORE</v-btn>
+            <v-btn
+                absolute
+                bottom
+                :style="{ left: '50%', transform: 'translateX(-50%)'}"
+                color="purple"
+                outlined
+                width="75%"
+                :to="`/detail/${next.p_projectid}`"
+                >KNOW MORE</v-btn
+              >
           </v-card-actions>
         </div>
       </div>
     </div>
-  
+
     <div class="footer fixed">
       <v-btn class="mr-10" icon color="purple" @click="reject"
         ><v-icon>mdi-heart-off</v-icon></v-btn
@@ -114,22 +132,6 @@ export default {
         draggedLeft: EVENTS.REJECT,
         draggedUp: EVENTS.SKIP,
       },
-      // cards: [
-      //   { src: 'karina.jpg', name: 'Karina', age: 7 },
-      //   { src: 'alexander.jpg', name: 'Alexander', age: 5 },
-      //   { src: 'bona.jpg', name: 'Bona', age: 3 },
-      //   { src: 'ichi.jpg', name: 'Ichi', age: 7 },
-      //   { src: 'lloyd.jpg', name: 'Lloyd', age: 4 },
-      //   { src: 'luiza.jpg', name: 'Luiza', age: 9 },
-      //   { src: 'max.jpg', name: 'Max', age: 6 },
-      //   { src: 'mona.jpg', name: 'Mona', age: 3 },
-      //   { src: 'naru.jpg', name: 'Naru', age: 7 },
-      //   { src: 'ramdan.jpg', name: 'Ramdan', age: 8 },
-      //   { src: 'rikki-austin.jpg', name: 'Rikki Austin', age: 3 },
-      //   { src: 'tucker.jpg', name: 'Tucker', age: 9 },
-      //   { src: 'uriel.jpg', name: 'Uriel', age: 6 },
-      //   { src: 'zoe.jpg', name: 'Zoe', age: 2 },
-      // ],
     };
   },
   computed: {
@@ -143,12 +145,15 @@ export default {
   methods: {
     match() {
       InteractEventBus.$emit(EVENTS.MATCH);
+      console.log('match');
     },
     reject() {
       InteractEventBus.$emit(EVENTS.REJECT);
+      console.log('rejected');
     },
     skip() {
       InteractEventBus.$emit(EVENTS.SKIP);
+      console.log('skip');
     },
     emitAndNext(event) {
       this.$emit(event, this.index);
@@ -161,14 +166,13 @@ export default {
   },
   props: {
     testingcards: {
-      type: Array,
+      type: Object,
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
 .footer {
   bottom: 0;
   left: 50%;
@@ -218,7 +222,6 @@ export default {
       0 20px 31px 3px rgba(152, 50, 50, 0.14),
       0 8px 38px 7px rgba(0, 0, 0, 0.12);
   }
-  
 }
 
 .transition {

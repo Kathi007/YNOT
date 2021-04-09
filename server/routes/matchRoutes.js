@@ -3,7 +3,10 @@ const asyncHandler = require('express-async-handler');
 const router = express.Router();
 const { getMatch, getMatches, checkMatch, delMatch, insertMatch} = require('../model/matches');
   
-
+router.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 //Get all matches for a user
 router.get(
   '/matches/user/:id',

@@ -4,6 +4,10 @@ import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
 import Profile from '../views/Profile.vue';
 import Chat from '../views/Chat.vue';
+import Detail from '../views/Details.vue';
+import resFromAPI from '../views/resFromAPI.vue';
+import store from '../store/index';
+
 
 Vue.use(VueRouter);
 
@@ -12,6 +16,17 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: Home,
+  },
+  {
+    path: '/resAuth',
+    name: 'ResAuth',
+    component: resFromAPI,
+  },
+  {
+    path: '/detail/:id',
+    name: 'Detail',
+    component: Detail,
+    props: true,
   },
   {
     path: '/about',
@@ -43,6 +58,27 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+  scrollBehavior(to) {
+    if (to.hash) {
+      return {
+        selector: to.hash,
+        behavior: 'smooth',
+      };
+    }
+  },
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'Login' && to.name !== 'ResAuth' && !store.state.user) {
+    console.log(to);
+    next({
+      name: 'Login',
+      query: {
+        redirect: to.path,
+      },
+    });
+  } else next();
+});
+
 
 export default router;
