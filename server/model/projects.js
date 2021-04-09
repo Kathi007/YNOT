@@ -25,7 +25,7 @@ async function getProjects() {  //returns all projects
   }
 
   async function getUserProjects(u_id) {
-    const { rows } = await db.query('QUERY', [u_id]);
+    const { rows } = await db.query('SELECT * FROM ynot.user u join user_project up using(u_userid) where u_userid = $1', [u_id]);
     if (rows.length > 0)
       return {
         code: 200,
@@ -39,7 +39,7 @@ async function getProjects() {  //returns all projects
   }
 
   async function getCreatedProjects(u_id) { //returns projects created by specified user
-    const { rows } = await db.query('QUERY', [u_id]);
+    const { rows } = await db.query('SELECT * FROM ynot.project where u_userid = $1', [u_id]);
     if (rows.length > 0)
       return {
         code: 200,
@@ -52,9 +52,15 @@ async function getProjects() {  //returns all projects
       };
   }
 
-  async function getSuggestedProjects(u_id) {   //returns projects fitting specified users criteria
+  async function getSuggestedProjects(f) {   //returns projects fitting specified users criteria
     	//Get user criteria
-      const { rows } = await db.query('USER CRITERIA QUERY', [u_id]);
+      const { rows } = await db.query(`SELECT * FROM ynot.user u 
+        join ynot.programming_language pl using (u_userid) 
+        join ynot.company co using(u_userid)
+        join ynot.educationial_institution i using(u_userid) 
+        WHERE (u.u_country = $1 AND u.u_time_zone = $2 AND u.u_zip_code = $3 AND u.u_expected_salary = $4
+          AND u.full_time = $5 AND pl.pl_name = $6 AND i.i_degree = $7 AND sum(year(co.co_startdate) - year(co.co_enddate)) = $8`, 
+          [f.uc,f.utz,f.uzc,f.ues,f.uft,f.pln,f.ide,f.ex]);
       if(rows.length > 0)
       {
         //Get projects with user criteria
@@ -79,8 +85,12 @@ async function getProjects() {  //returns all projects
       }
   }
 
+
   async function filterProjects(f) {   //returns Projects fitting a filter
-    const {rows} = await db.query(`QUERY`,[]);
+    const {rows} = await db.query(`SELECT * FROM ynot.project p
+    join ynot.programming_language pl using (u_userid) 
+    WHERE (p.p_country = $1 AND p.p_time_zone = $2 AND p.p_zip_code = $3 AND u.full_time = $4 AND pl.pl_name= $5
+      p.p_degree = $6 AND p_expereince = $7`,[f.pc,f.ptz,f.pzc,f.pft,f.pln,f.pde,f.pe]);
     if (rows.length > 0)
       return {
         code: 200,
