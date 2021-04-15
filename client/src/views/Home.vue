@@ -1,5 +1,5 @@
 <template>
-  <div class="bg">
+  <div id="app">
     <v-app id="inspire">
       <v-navigation-drawer v-model="sidebar" app fixed temporary>
         <v-list nav dense>
@@ -16,7 +16,6 @@
           </v-list-item-group>
         </v-list>
       </v-navigation-drawer>
-
       <v-app-bar
         color="grey lighten-5"
         app
@@ -44,7 +43,26 @@
         <v-spacer></v-spacer>
         <span class="hidden-xs-only">
           <v-btn to="/profile" color="grey" text>Profile</v-btn>
-          <v-btn color="grey" text>Sign Up</v-btn>
+          <v-menu offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="grey" text v-bind="attrs" v-on="on">
+                Sign Up
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item>
+                <v-list-item-action>
+                  <v-btn text>User</v-btn>
+                </v-list-item-action>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-action>
+                  <v-btn text>Project</v-btn>
+                </v-list-item-action>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+
           <v-btn to="/chat" color="grey" text>Messages</v-btn>
         </span>
         <!-- open dialog -->
@@ -72,26 +90,41 @@
                 </v-btn>
               </v-toolbar-items>
             </v-toolbar>
-            <v-list>
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title>Content filtering</v-list-item-title>
-                  <v-list-item-subtitle
-                    >Set the content filtering level to restrict apps that can
-                    be downloaded</v-list-item-subtitle
-                  >
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title>Password</v-list-item-title>
-                  <v-list-item-subtitle
-                    >Require password for purchase or use password to restrict
-                    purchase</v-list-item-subtitle
-                  >
-                </v-list-item-content>
-              </v-list-item>
-            </v-list>
+            <template>
+              <v-container fluid>
+                <v-subheader>Search by User Ability</v-subheader>
+                <v-row class="ml-5">
+                  <v-col>
+                    <v-checkbox
+                      v-model="u_abilities"
+                      label="CSS"
+                      value="CSS"
+                    ></v-checkbox>
+                  </v-col>
+                  <v-col>
+                    <v-checkbox
+                      v-model="u_abilities"
+                      label="HTML"
+                      value="HTML"
+                    ></v-checkbox>
+                  </v-col>
+                  <v-col>
+                    <v-checkbox
+                      v-model="u_abilities"
+                      label="VUE"
+                      value="VUE"
+                    ></v-checkbox>
+                  </v-col>
+                  <v-col>
+                    <v-checkbox
+                      v-model="u_abilities"
+                      label="MYSQL"
+                      value="MYSQL"
+                    ></v-checkbox
+                  ></v-col>
+                </v-row>
+              </v-container>
+            </template>
           </v-card>
         </v-dialog>
       </v-app-bar>
@@ -112,25 +145,17 @@
           label="Users"
           v-model="switch1"
           style="float:right;"
-        ></v-switch>
-
-        <SwipeCards :testingcards="projects" />
-        <!-- <SwipeCardsUsers :testingcards="users" /> -->
+        >
+        </v-switch>
+        <SwipeCardsProjects v-show="switch1" :testingcards="projects" />
+        <SwipeCardsUsers v-if="switch1 == false" :testingcards="users" />
       </v-main>
-
-      <!-- <img src="../public/img/icons/Zeichenfläche 1@0.5x.png" fixed> -->
-      <!-- <v-footer class="justify-center" color="#292929" height="100">
-          <div
-            class="title font-weight-light grey--text text--lighten-1 text-center"
-          >
-            &copy; {{ new Date().getFullYear() }} — Vuetify, LLC — YNOTCOLLAB?
-          </div>
-        </v-footer> -->
     </v-app>
   </div>
 </template>
 <script>
-import SwipeCards from '../components/SwipeCards';
+import SwipeCardsProjects from '../components/SwipeCardsProjects';
+import SwipeCardsUsers from '../components/SwipeCardsUser';
 import axios from 'axios';
 
 export default {
@@ -145,10 +170,12 @@ export default {
       switch1: true,
       label: 'Projects',
       error: 'noerror',
+      u_abilities: [],
     };
   },
   components: {
-    SwipeCards,
+    SwipeCardsProjects,
+    SwipeCardsUsers,
   },
   methods: {
     async getUsers() {
@@ -157,7 +184,8 @@ export default {
           url: 'http://127.0.0.1:3001/users',
           method: 'get',
         });
-        this.users = res.data;
+        this.users = res.data.data;
+        console.log(this.users);
       } catch (error) {
         console.log(error);
         this.error = error;
@@ -177,10 +205,19 @@ export default {
       }
     },
   },
-
   created() {
     this.getUsers();
     this.getProjects();
+  },
+  computed: {
+    u_selected() {
+      //filter users by ability
+      return this.users;
+    },
+    p_selected() {
+      //filter projects by searched ability
+      return this.projects;
+    },
   },
 };
 </script>

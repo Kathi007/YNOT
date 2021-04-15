@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="bg">
+    <div class="app">
       <v-app id="inspire">
         <v-app-bar
           color="grey lighten-5"
@@ -124,9 +124,7 @@
             <v-avatar class="elevation-12 mb-12" size="128">
               <v-img src="../../public/img/Salem.png"></v-img>
             </v-avatar>
-            <v-row>
-            
-            </v-row>
+            <v-row> </v-row>
           </v-container>
         </section>
         <section id="log-in">
@@ -150,37 +148,11 @@
                     :disabled="!isInit"
                     >get authCode</v-btn
                   > -->
-                  <!-- <img src="" alt="" srcset="" />
+
                   <v-btn
                     type="primary"
                     @click="handleClickSignIn"
                     v-if="!isSignIn"
-                    :disabled="!isInit"
-                    >sign in with google</v-btn
-                  >
-
-                  <v-btn
-                    type="primary"
-                    @click="handleClickSignOut"
-                    v-if="isSignIn"
-                    :disabled="!isInit"
-                    >sign out</v-btn
-                  >
-                  <p>{{ username }}</p> -->
-                  <br /><br />
-                  <!-- <p>isInit: {{ isInit }}</p>
-                  <p>isSignIn: {{ isSignIn }}</p> -->
-                  <!-- <v-btn
-                    type="primary"
-                    @click="handleClickUpdateScope"
-                    :disabled="!isInit"
-                    >update scope</v-btn
-                  > -->
-
-                  <v-btn
-                    class="loginBtn w-full my-1 bg-black disabled:bg-opacity-50 hover:bg-opacity-50 text-white py-4 px-4 rounded-md mt-20"
-                    ref="signinBtn"
-                    @click="handleGoogle"
                     :disabled="!isInit"
                   >
                     <span v-if="isInit">Continue with Google</span>
@@ -228,16 +200,46 @@ export default {
     }, 1000);
   },
   methods: {
-    async handleGoogle() {
-      this.isInit = false;
+    // async handleGoogle() {
+    //   this.isInit = false;
 
+    //   try {
+    //     authCode = await this.$gAuth.getAuthCode();
+    //     const googleUser = await this.$gAuth.signIn();
+    //     if (!googleUser) {
+    //       return null;
+    //     }
+    //     const auth2 = gapi.auth2.getAuthInstance();
+    //     if (auth2.isSignedIn.get()) {
+    //       var profile = auth2.currentUser.get().getBasicProfile();
+    //       console.log('ID: ' + profile.getId());
+    //       console.log('Full Name: ' + profile.getName());
+    //       console.log('Given Name: ' + profile.getGivenName());
+    //       console.log('Family Name: ' + profile.getFamilyName());
+    //       console.log('Image URL: ' + profile.getImageUrl());
+    //       console.log('Email: ' + profile.getEmail());
+    //       this.username = profile.getName();
+
+    //       localStorage.message = "hello world"
+    //     }
+    //     this.isSignIn = this.$gAuth.isAuthorized;
+    //   } catch (err) {
+    //     if (err.error == 'popup_closed_by_user') this.isInit = true;
+    //     return;
+    //   }
+
+    //   this.$router.replace(this.$route.query.redirect || '/home');
+    //   console.log(profile);
+
+    // },
+    async handleClickSignIn() {
       try {
-        authCode = await this.$gAuth.getAuthCode();
         const googleUser = await this.$gAuth.signIn();
         if (!googleUser) {
           return null;
         }
         const auth2 = gapi.auth2.getAuthInstance();
+
         if (auth2.isSignedIn.get()) {
           var profile = auth2.currentUser.get().getBasicProfile();
           console.log('ID: ' + profile.getId());
@@ -246,21 +248,23 @@ export default {
           console.log('Family Name: ' + profile.getFamilyName());
           console.log('Image URL: ' + profile.getImageUrl());
           console.log('Email: ' + profile.getEmail());
-          this.username = profile.getName();
+          this.familyName = profile.getName();
         }
+        console.log('googleUser', googleUser);
+        console.log('getId', googleUser.getId());
+        console.log('getBasicProfile', googleUser.getBasicProfile());
+        console.log('getAuthResponse', googleUser.getAuthResponse());
+        console.log(
+          'getAuthResponse',
+          this.$gAuth.GoogleAuth.currentUser.get().getAuthResponse(),
+        );
         this.isSignIn = this.$gAuth.isAuthorized;
-      } catch (err) {
-        if (err.error == 'popup_closed_by_user') this.isInit = true;
-        return;
+        this.$router.replace(this.$route.query.redirect || '/home');
+      } catch (error) {
+        //on fail do something
+        console.error(error);
+        return null;
       }
-      // const res = await axios.post(
-      //   `${process.env.VUE_APP_API_URL}/google/token`,
-      //   { authCode: authCode },
-      // );
-      this.$store.dispatch('setUser', profile);
-      this.$router.replace(this.$route.query.redirect || '/home');
-      console.log(profile);
-      
     },
 
     checkConnection() {

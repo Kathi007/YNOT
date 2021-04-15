@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app">
     <p>chat</p>
   </div>
 </template>

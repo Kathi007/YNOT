@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg">
     <v-app>
       <v-navigation-drawer v-model="sidebar" app fixed temporary>
         <v-list nav dense>
@@ -51,7 +51,7 @@
       </v-app-bar>
 
       <v-main>
-         <h1>{{ $store.state.user.name }}</h1>
+         <!-- <h1>{{ $store.state.user.name }}</h1> -->
       </v-main>
     </v-app>
 

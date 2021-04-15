@@ -5,8 +5,8 @@ import Login from '../views/Login.vue';
 import Profile from '../views/Profile.vue';
 import Chat from '../views/Chat.vue';
 import Detail from '../views/Details.vue';
-import resFromAPI from '../views/resFromAPI.vue';
-import store from '../store/index';
+// import resFromAPI from '../views/resFromAPI.vue';
+// import store from '../store/index';
 
 
 Vue.use(VueRouter);
@@ -17,11 +17,11 @@ const routes = [
     name: 'Home',
     component: Home,
   },
-  {
-    path: '/resAuth',
-    name: 'ResAuth',
-    component: resFromAPI,
-  },
+  // {
+  //   path: '/resAuth',
+  //   name: 'ResAuth',
+  //   component: resFromAPI,
+  // },
   {
     path: '/detail/:id',
     name: 'Detail',
@@ -68,17 +68,17 @@ const router = new VueRouter({
   },
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.name !== 'Login' && to.name !== 'ResAuth' && !store.state.user) {
-    console.log(to);
-    next({
-      name: 'Login',
-      query: {
-        redirect: to.path,
-      },
-    });
-  } else next();
-});
+// router.beforeEach((to, from, next) => {
+//   if (to.name !== 'Login' && to.name !== 'ResAuth' && !store.state.user) {
+//     console.log(to);
+//     next({
+//       name: 'Login',
+//       query: {
+//         redirect: to.path,
+//       },
+//     });
+//   } else next();
+// });
 
 
 export default router;
