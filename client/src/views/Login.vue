@@ -146,7 +146,7 @@
                             name="email"
                             type="email"
                             v-model="email"
-                            color="teal accent-3"
+                            color="pink darken-3"
                           />
 
                           <v-text-field
@@ -155,7 +155,7 @@
                             name="password"
                             type="password"
                             v-model="password"
-                            color="teal accent-3"
+                            color="pink darken-3"
                           />
                         </v-form>
                         <p class="mt-4 text-center">
@@ -201,7 +201,7 @@
 export default {
   data() {
     return {
-      email: '',
+      username: '',
       password: '',
     };
   },
@@ -212,7 +212,7 @@ export default {
           url: '/login',
           method: 'post',
           data: {
-            email: this.email,
+            username: this.username,
             password: this.password,
           },
         });

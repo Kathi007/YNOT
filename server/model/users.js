@@ -193,6 +193,7 @@ async function getUsers() {  //returns all users
     getUser,
     getUserInProject,
     getSuggestedUsers,
+    signIn,
     filterUsers,
     insertUser,
     delUser,

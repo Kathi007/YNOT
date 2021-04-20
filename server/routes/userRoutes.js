@@ -101,12 +101,12 @@ router.post('/login', (req, res) => {
   // enter your code here
   //wird vom Frontend gegeben
   email = req.body.email;
-  password = req.body.password;
+  password = req.body.username;
 
-  //ob die passwörter udn email gleich sind
-  if (email && password) {
+  //ob die passwörter und email gleich sind
+  if (username && password) {
     const user = data.find(
-      (el) => el.email === email && el.password === password,
+      (el) => el.username === username && el.password === password,
     );
     if (user) {
       req.session.userId = user.id;
@@ -122,15 +122,21 @@ router.get('/logout', redirectLogin, (req, res) => {
 });
 
 //user wird hinzugefügt
-router.post('/register', (req, res) => {
-  //hier soll stattdessen ein datenbankbefehl stehen? Ob diese email halt schon existiert
-  let found = data.find((el) => el.email === req.body.email);
-  if (!found) {
-    data.push(req.body);
-    res.status(200).send('added user');
-  } else {
-    res.status(409).send('Email already in use!');
-  }
-});
+router.post(
+  '/register',
+  asyncHandler(async (req, res) => {
+    //Ob diese email schon existiert
+    let found = data.find((el) => el.email === req.body.email);
+    if (!found) {
+      // data.push(req.body);
+      const result = await signIn(req.body);
+      res.status(result.code).json(result);
+
+      res.status(200).send('added user');
+    } else {
+      res.status(409).send('Email already in use!');
+    }
+  }),
+);
 
 module.exports = router;

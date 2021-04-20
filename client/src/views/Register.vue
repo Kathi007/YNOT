@@ -40,7 +40,6 @@
     <p class="mt-4 text-center">
       Have an account? <a href="/">Login</a> first!
     </p>
-    <p class="mt-auto text-center">&copy; 2021 Robert Baumgartner</p>
   </div>
 </template>
 

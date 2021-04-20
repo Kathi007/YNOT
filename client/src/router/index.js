@@ -17,10 +17,10 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: Home,
-    beforeEnter: (to, from, next) => {
-      if (!isAuthenticated()) next({ name: 'Login' });
-      next();
-    },
+    // beforeEnter: (to, from, next) => {
+    //   if (!isAuthenticated()) next({ name: 'Login' });
+    //   next();
+    // },
   },
 
   {
