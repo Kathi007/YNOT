@@ -3,7 +3,7 @@
 const db = require('../db');
 
 async function getUsers() {  //returns all users
-    const { rows } = await db.query('SELECT * FROM ynot.user join user_pl using(u_userid)');
+    const { rows } = await db.query('SELECT * FROM ynot.user join user_pl using(u_userid) join programming_language using(pl_id)');
     return {
       code: 200,
       data: rows,
@@ -11,7 +11,7 @@ async function getUsers() {  //returns all users
   }
   
   async function getUser(id) {   //returns user with specific username
-    const { rows } = await db.query('SELECT * FROM ynot.user WHERE u_userid = $1 join user_pl using(u_userid)', [id]);
+    const { rows } = await db.query('SELECT * FROM ynot.user WHERE u_userid = $1 join user_pl using(u_userid) join programming_language using(pl_id)', [id]);
     if (rows.length > 0)
       return {
         code: 200,
