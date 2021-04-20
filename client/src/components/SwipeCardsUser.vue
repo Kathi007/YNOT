@@ -25,7 +25,7 @@
               {{ current.u_firstname }} {{ current.u_surename }}
             </v-card-title>
             <v-card-title class="subtitle-1">
-              Requirements:
+              Coding languages:
             </v-card-title>
             <v-card-text>
               LOREM IPSUM
@@ -36,8 +36,12 @@
             <v-card-text>
               {{ current.u_email }}
             </v-card-text>
+            <v-divider></v-divider>
+            <v-card-title class="subtitle-1">
+              Short description:
+            </v-card-title>
             <v-card-text>
-              {{ current.u_short_introduction }}
+              {{ next.p_short_description }}
             </v-card-text>
 
             <v-card-actions>
@@ -69,13 +73,13 @@
             {{ next.u_firstname }} {{ next.u_surename }}
           </v-card-title>
           <v-card-title class="subtitle-1">
-            Requirements:
+            Coding languages:
           </v-card-title>
           <v-card-text>
             LOREM IPSUM
           </v-card-text>
           <v-card-title class="subtitle-1">
-            Short description:
+            Contact:
           </v-card-title>
           <v-card-text>
             {{ next.u_email }}

@@ -28,7 +28,7 @@
               {{ current.p_name }}
             </v-card-title>
             <v-card-title class="subtitle-1">
-              Requirements:
+              Coding languages required:
             </v-card-title>
             <v-card-text>
               {{ current.p_zip_code }}
@@ -45,7 +45,7 @@
               <v-btn
                 absolute
                 bottom
-                :style="{ left: '50%', transform: 'translateX(-50%)'}"
+                :style="{ left: '50%', transform: 'translateX(-50%)' }"
                 color="purple"
                 outlined
                 width="75%"
@@ -70,7 +70,7 @@
             {{ next.p_name }}
           </v-card-title>
           <v-card-title class="subtitle-1">
-            Requirements:
+            Coding languages required:
           </v-card-title>
           <v-card-text>
             {{ next.p_zip_code }}
@@ -85,15 +85,15 @@
 
           <v-card-actions>
             <v-btn
-                absolute
-                bottom
-                :style="{ left: '50%', transform: 'translateX(-50%)'}"
-                color="purple"
-                outlined
-                width="75%"
-                :to="`/detail/${next.p_projectid}`"
-                >KNOW MORE</v-btn
-              >
+              absolute
+              bottom
+              :style="{ left: '50%', transform: 'translateX(-50%)' }"
+              color="purple"
+              outlined
+              width="75%"
+              :to="`/detail/${next.p_projectid}`"
+              >KNOW MORE</v-btn
+            >
           </v-card-actions>
         </div>
       </div>

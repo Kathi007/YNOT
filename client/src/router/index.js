@@ -2,26 +2,23 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
-import Profile from '../views/Profile.vue';
+import Account from '../views/Account.vue';
 import Chat from '../views/Chat.vue';
 import Detail from '../views/Details.vue';
-// import resFromAPI from '../views/resFromAPI.vue';
-// import store from '../store/index';
-
+import Logout from '../views/Logout.vue';
 
 Vue.use(VueRouter);
-
+function isAuthenticated() {
+  if (Vue.$cookies.get('sid')) return true;
+  else return false;
+}
 const routes = [
   {
     path: '/home',
     name: 'Home',
     component: Home,
   },
-  // {
-  //   path: '/resAuth',
-  //   name: 'ResAuth',
-  //   component: resFromAPI,
-  // },
+
   {
     path: '/detail/:id',
     name: 'Detail',
@@ -29,23 +26,32 @@ const routes = [
     props: true,
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/About.vue'),
-  },
-  {
     path: '/',
     name: 'Login',
     component: Login,
+    beforeEnter: (to, from, next) => {
+      if (!isAuthenticated()) next({ name: 'Login' });
+      next();
+    },
   },
   {
-    path: '/profile',
-    name: 'Profile',
-    component: Profile,
+    path: '/logout',
+    name: 'Logout',
+    component: Logout,
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import(/* webpackPrefetch: true */ '@/views/Register.vue'),
+  },
+  {
+    path: '/account',
+    name: 'Account',
+    component: Account,
+    beforeEnter: (to, from, next) => {
+      if (!isAuthenticated()) next({ name: 'Login' });
+      next();
+    },
   },
   {
     path: '/chat',
@@ -58,27 +64,6 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
-  scrollBehavior(to) {
-    if (to.hash) {
-      return {
-        selector: to.hash,
-        behavior: 'smooth',
-      };
-    }
-  },
 });
-
-// router.beforeEach((to, from, next) => {
-//   if (to.name !== 'Login' && to.name !== 'ResAuth' && !store.state.user) {
-//     console.log(to);
-//     next({
-//       name: 'Login',
-//       query: {
-//         redirect: to.path,
-//       },
-//     });
-//   } else next();
-// });
-
 
 export default router;

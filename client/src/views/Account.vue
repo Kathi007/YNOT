@@ -50,12 +50,12 @@
         </span>
       </v-app-bar>
 
-      <v-main>
-         <!-- <h1>{{ $store.state.user.name }}</h1> -->
-      </v-main>
+      <h1 class="text-center my-3">{{ user.name }}'s Account</h1>
+      <div class="mx-auto d-block">
+        <router-link to="/">Home</router-link> |
+        <router-link to="/logout">Logout</router-link>
+      </div>
     </v-app>
-
-    
   </div>
 </template>
 
@@ -64,7 +64,15 @@ export default {
   data() {
     return {
       sidebar: false,
-    }
+      user: {
+        id: '',
+        name: '',
+      },
+    };
+  },
+  async created() {
+    this.user.id = localStorage.getItem('id');
+    this.user.name = localStorage.getItem('name');
   },
 };
 </script>
