@@ -1,10 +1,7 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
 const router = express.Router();
-const redirectLogin = (req, res, next) => {
-  if (!req.session.userId) res.status(400).send('You are not logged in!');
-  else next();
-};
+
 const {
   getUsers,
   getUser,
@@ -14,10 +11,12 @@ const {
   delUser,
   patchUser,
 } = require('../model/users');
-router.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
+
+const redirectLogin = (req, res, next) => {
+  if (!req.session.userId) res.status(400).send('You are not logged in!');
+  else next();
+};
+
 //Get all users
 router.get(
   '/users',
@@ -124,6 +123,7 @@ router.get('/logout', redirectLogin, (req, res) => {
 
 //user wird hinzugefügt
 router.post('/register', (req, res) => {
+  //hier soll stattdessen ein datenbankbefehl stehen? Ob diese email halt schon existiert
   let found = data.find((el) => el.email === req.body.email);
   if (!found) {
     data.push(req.body);

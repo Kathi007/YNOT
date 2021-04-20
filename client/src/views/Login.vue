@@ -216,7 +216,7 @@ export default {
             password: this.password,
           },
         });
-        this.$router.push('/');
+        this.$router.push('/home');
         console.log(res.data);
         localStorage.setItem('id', res.data.id);
         localStorage.setItem('name', res.data.name);
