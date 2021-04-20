@@ -20,11 +20,6 @@
               width="230"
             />
           </div>
-
-          <v-spacer></v-spacer>
-          <v-avatar class=" mr-7" size="44">
-            <v-img></v-img>
-          </v-avatar>
         </v-app-bar>
         <section id="hero">
           <v-row no-gutters>
@@ -142,22 +137,45 @@
               </v-responsive>
               <v-row align="center" justify="center" no-gutters>
                 <v-col cols="12" sm="8">
-                  <!-- <v-btn
-                    type="primary"
-                    @click="handleClickLogin"
-                    :disabled="!isInit"
-                    >get authCode</v-btn
-                  > -->
+                  <form @submit.prevent="login">
+                    <v-card>
+                      <v-card-text>
+                        <v-form>
+                          <v-text-field
+                            label="Email"
+                            name="email"
+                            type="email"
+                            v-model="email"
+                            color="teal accent-3"
+                          />
 
-                  <v-btn
-                    type="primary"
-                    @click="handleClickSignIn"
-                    v-if="!isSignIn"
-                    :disabled="!isInit"
-                  >
-                    <span v-if="isInit">Continue with Google</span>
-                    <span v-else>Loading...</span>
-                  </v-btn>
+                          <v-text-field
+                            id="password"
+                            label="Password"
+                            name="password"
+                            type="password"
+                            v-model="password"
+                            color="teal accent-3"
+                          />
+                        </v-form>
+                        <p class="mt-4 text-center">
+                          No account? <a href="/register">Register here!</a>
+                        </p>
+                      </v-card-text>
+                      <v-card-actions>
+                        <v-btn
+                          :style="{
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                          }"
+                          color="purple"
+                          width="50%"
+                          dark
+                          >LOG IN</v-btn
+                        >
+                      </v-card-actions>
+                    </v-card>
+                  </form>
                 </v-col>
               </v-row>
             </v-container>
@@ -181,92 +199,32 @@
 /* eslint-disable */
 
 export default {
-  data: () => ({
-    step: 1,
-    profile: [],
-    disable: true,
-    isInit: false,
-    isSignIn: false,
-    username: '',
-    mode: 'login',
-  }),
-  created() {
-    this.checkConnection();
-    let that = this;
-    let checkGauthLoad = setInterval(function() {
-      that.isInit = that.$gAuth.isInit;
-      // that.isSignIn = that.$gAuth.isAuthorized;
-      if (that.isInit) clearInterval(checkGauthLoad);
-    }, 1000);
+  data() {
+    return {
+      email: '',
+      password: '',
+    };
   },
   methods: {
-    // async handleGoogle() {
-    //   this.isInit = false;
-
-    //   try {
-    //     authCode = await this.$gAuth.getAuthCode();
-    //     const googleUser = await this.$gAuth.signIn();
-    //     if (!googleUser) {
-    //       return null;
-    //     }
-    //     const auth2 = gapi.auth2.getAuthInstance();
-    //     if (auth2.isSignedIn.get()) {
-    //       var profile = auth2.currentUser.get().getBasicProfile();
-    //       console.log('ID: ' + profile.getId());
-    //       console.log('Full Name: ' + profile.getName());
-    //       console.log('Given Name: ' + profile.getGivenName());
-    //       console.log('Family Name: ' + profile.getFamilyName());
-    //       console.log('Image URL: ' + profile.getImageUrl());
-    //       console.log('Email: ' + profile.getEmail());
-    //       this.username = profile.getName();
-
-    //       localStorage.message = "hello world"
-    //     }
-    //     this.isSignIn = this.$gAuth.isAuthorized;
-    //   } catch (err) {
-    //     if (err.error == 'popup_closed_by_user') this.isInit = true;
-    //     return;
-    //   }
-
-    //   this.$router.replace(this.$route.query.redirect || '/home');
-    //   console.log(profile);
-
-    // },
-    async handleClickSignIn() {
+    async login() {
       try {
-        const googleUser = await this.$gAuth.signIn();
-        if (!googleUser) {
-          return null;
-        }
-        const auth2 = gapi.auth2.getAuthInstance();
-
-        if (auth2.isSignedIn.get()) {
-          var profile = auth2.currentUser.get().getBasicProfile();
-          console.log('ID: ' + profile.getId());
-          console.log('Full Name: ' + profile.getName());
-          console.log('Given Name: ' + profile.getGivenName());
-          console.log('Family Name: ' + profile.getFamilyName());
-          console.log('Image URL: ' + profile.getImageUrl());
-          console.log('Email: ' + profile.getEmail());
-          this.familyName = profile.getName();
-        }
-        console.log('googleUser', googleUser);
-        console.log('getId', googleUser.getId());
-        console.log('getBasicProfile', googleUser.getBasicProfile());
-        console.log('getAuthResponse', googleUser.getAuthResponse());
-        console.log(
-          'getAuthResponse',
-          this.$gAuth.GoogleAuth.currentUser.get().getAuthResponse(),
-        );
-        this.isSignIn = this.$gAuth.isAuthorized;
-        this.$router.replace(this.$route.query.redirect || '/home');
+        let res = await axios({
+          url: '/login',
+          method: 'post',
+          data: {
+            email: this.email,
+            password: this.password,
+          },
+        });
+        this.$router.push('/home');
+        console.log(res.data);
+        localStorage.setItem('id', res.data.id);
+        localStorage.setItem('name', res.data.name);
+        console.log(res.data);
       } catch (error) {
-        //on fail do something
-        console.error(error);
-        return null;
+        console.log(error);
       }
     },
-
     checkConnection() {
       setTimeout(() => {
         if (!navigator.onLine) this.offline = true;
