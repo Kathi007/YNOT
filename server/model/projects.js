@@ -3,7 +3,7 @@
 const db = require('../db');
 
 async function getProjects() {  //returns all projects
-    const { rows } = await db.query('SELECT * FROM ynot.project');
+    const { rows } = await db.query('SELECT * FROM ynot.project join ynot.project_pl on (p_projectid=p_id)');
     return {
       code: 200,
       data: rows,
@@ -11,7 +11,7 @@ async function getProjects() {  //returns all projects
   }
   
   async function getProject(id) {   //returns project with specific ID
-    const { rows } = await db.query('SELECT * FROM ynot.project WHERE p_projectid = $1', [id]);
+    const { rows } = await db.query('SELECT * FROM ynot.project WHERE p_projectid = $1 join ynot.project_pl on (p_projectid=p_id)', [id]);
     if (rows.length > 0)
       return {
         code: 200,
@@ -39,7 +39,7 @@ async function getProjects() {  //returns all projects
   }
 
   async function getCreatedProjects(u_id) { //returns projects created by specified user
-    const { rows } = await db.query('SELECT * FROM ynot.project where u_userid = $1', [u_id]);
+    const { rows } = await db.query('SELECT * FROM ynot.project where u_userid = $1 join ynot.project_pl on (p_projectid=p_id)', [u_id]);
     if (rows.length > 0)
       return {
         code: 200,
@@ -55,6 +55,7 @@ async function getProjects() {  //returns all projects
   async function getSuggestedProjects(f) {   //returns projects fitting specified users criteria
     	//Get user criteria
       const { rows } = await db.query(`SELECT * FROM ynot.user u 
+        join ynot.user_pl using (u_userid)
         join ynot.programming_language pl using (u_userid) 
         join ynot.company co using(u_userid)
         join ynot.educationial_institution i using(u_userid) 
@@ -88,7 +89,8 @@ async function getProjects() {  //returns all projects
 
   async function filterProjects(f) {   //returns Projects fitting a filter
     const {rows} = await db.query(`SELECT * FROM ynot.project p
-    join ynot.programming_language pl using (u_userid) 
+    join ynot.project_pl on (p_projectid=p_id)
+    join ynot.programming_language pl using (pl_id) 
     WHERE (p.p_country = $1 AND p.p_time_zone = $2 AND p.p_zip_code = $3 AND u.full_time = $4 AND pl.pl_name= $5
       p.p_degree = $6 AND p_expereince = $7`,[f.pc,f.ptz,f.pzc,f.pft,f.pln,f.pde,f.pe]);
     if (rows.length > 0)
