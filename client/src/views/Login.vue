@@ -137,7 +137,7 @@
               </v-responsive>
               <v-row align="center" justify="center" no-gutters>
                 <v-col cols="12" sm="8">
-                  <form @submit.prevent="login">
+                  <form>
                     <v-card>
                       <v-card-title
                         primary-title
@@ -169,6 +169,11 @@
                         <p class="mt-4 text-center">
                           No account? <a href="/register">Register here!</a>
                         </p>
+                        <!-- <div>
+                        <button class="btn btn-primary">
+                          LOG IN
+                        </button>
+                      </div> -->
                       </v-card-text>
                       <v-card-actions>
                         <v-btn
@@ -179,8 +184,9 @@
                           color="purple"
                           width="50%"
                           dark
-                          @click="login"
+                          to="/home"
                           >LOG IN</v-btn
+                        >
                         >
                       </v-card-actions>
                     </v-card>
@@ -210,15 +216,15 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      username: '',
-      password: '',
+      username: 'Joshua48',
+      password: 'abc',
     };
   },
   methods: {
     async login() {
       try {
         let res = await axios({
-          url: '/users/signin',
+          url: '/login',
           method: 'post',
           data: {
             u_username: this.username,
@@ -226,7 +232,6 @@ export default {
           },
         });
         this.$router.push('/home');
-        console.log(res.data);
         localStorage.setItem('id', res.data.id);
         localStorage.setItem('name', res.data.name);
         console.log(res.data);

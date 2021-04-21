@@ -10,6 +10,7 @@ const {
   filterUsers,
   delUser,
   patchUser,
+  signIn,
 } = require('../model/users');
 
 const redirectLogin = (req, res, next) => {
@@ -80,21 +81,17 @@ router.post(
   }),
 );
 
-  //Login for user
+//Login for user
 router.post(
-  '/users/signin',
+  '/login',
   asyncHandler(async (req, res) => {
-    const result = await signIn(req.body);
-    if(result.code == 200)
-    {
-      req.session.userId = result.user.u_id;
-      res.status(200).json(result.user);
+    const result = await signIn(req.body.data);    
+    if (result) {
+      req.session.userId = result.u_userid;
+      res.status(200).json({ id: result.u_userid, name: result.u_username });
+    } else {
+      res.status(401).send('Wrong email or password');
     }
-    else
-    {
-      res.status(result.code).json(result);
-    }
-    res.status(401).send('Wrong email or password');
   }),
 );
 
@@ -135,12 +132,12 @@ router.post('/login', (req, res) => {
     } else res.status(401).send('Wrong email or password');
   } else res.status(400).send('Login failed');
 });
+*/
 //logout
 router.get('/logout', redirectLogin, (req, res) => {
   req.session.destroy();
   res.clearCookie(process.env.SESSION_NAME);
 });
-*/
 
 //user wird hinzugefügt
 router.post(

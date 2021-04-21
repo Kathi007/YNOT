@@ -3,6 +3,8 @@ import App from './App.vue';
 import './registerServiceWorker';
 import router from './router';
 import vuetify from './plugins/vuetify';
+import VueCookies from 'vue-cookies';
+Vue.use(VueCookies);
 // import GAuth from 'vue-google-oauth2';
 // import installElement from './plugins/element/installElement.js';
 
