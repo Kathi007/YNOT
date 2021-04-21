@@ -130,7 +130,8 @@ export default {
     };
   },
   async created() {
-    let res = await axios(`http://127.0.0.1:3001/projects/${this.id}`);
+    // let res = await axios(`http://127.0.0.1:3001/projects/${this.id}`);
+    let res = await axios(`http://193.170.162.166:3001/projects/${this.id}`);
     this.projects = res.data.data;
     console.log(this.projects);
   },

@@ -12,11 +12,14 @@ const matchRoutes = require('./routes/matchRoutes');
 const cookieParser = require('cookie-parser');
 const history = require('connect-history-api-fallback');
 const session = require('express-session');
+var cors = require('cors');
 
 const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
 require('dotenv').config();
 
 const app = express();
+app.use(cors());
+
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(history());

@@ -159,6 +159,7 @@ export default {
     async getUsers() {
       try {
         let res = await axios({
+          // url: 'http://193.170.162.166:3001/users',
           url: 'http://127.0.0.1:3001/users',
           method: 'get',
         });
@@ -173,6 +174,7 @@ export default {
       try {
         let res = await axios({
           url: 'http://127.0.0.1:3001/projects',
+          // url: '/projects',
           method: 'get',
         });
         this.projects = res.data.data;

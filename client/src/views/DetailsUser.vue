@@ -127,7 +127,8 @@ export default {
     };
   },
   async created() {
-    let res = await axios(`http://127.0.0.1:3001/users/${this.id}`);
+    // let res = await axios(`http://127.0.0.1:3001/users/${this.id}`);
+    let res = await axios(`/users/${this.id}`);
     this.users = res.data.data;
     console.log(this.users);
   },

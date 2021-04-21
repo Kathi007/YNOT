@@ -179,6 +179,7 @@
                           color="purple"
                           width="50%"
                           dark
+                          @click="login"
                           >LOG IN</v-btn
                         >
                       </v-card-actions>
@@ -203,7 +204,7 @@
 </template>
 
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 /* eslint-disable */
 
 export default {

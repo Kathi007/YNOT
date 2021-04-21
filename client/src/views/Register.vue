@@ -185,7 +185,8 @@ export default {
       // enter your code here
       try {
         let res = await axios({
-          url: 'http://127.0.0.1:3000/register',
+          url: '/register',
+          // url: 'http://127.0.0.1:3001/register',
           method: 'post',
           data: {
             u_username: this.username,
