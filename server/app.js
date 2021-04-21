@@ -14,6 +14,8 @@ const history = require('connect-history-api-fallback');
 const session = require('express-session');
 
 const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
+const { PORT, NODE_ENV, SESSION_LIFETIME, SESSION_NAME, SESSION_SECRET } = process.env;
+
 require('dotenv').config();
 
 const app = express();
@@ -36,6 +38,7 @@ const {
   SESSION_NAME,
   SESSION_SECRET,
 } = process.env;
+
 // Register middleware for express sessions here
 app.use(
   session({

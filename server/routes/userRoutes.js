@@ -62,6 +62,15 @@ router.get(
   }),
 );
 
+//Log out user --> Clear session
+router.get(
+  '/users/logout',
+  asyncHandler(async (req, res) => {
+    req.session.destroy();
+    res.clearCookie(process.env.SESSION_NAME);
+  }),
+);
+
 //Add new user with specified attributes
 router.post(
   '/users',
@@ -71,11 +80,21 @@ router.post(
   }),
 );
 
+  //Login for user
 router.post(
   '/users/signin',
   asyncHandler(async (req, res) => {
     const result = await signIn(req.body);
-    res.status(result.code).json(result);
+    if(result.code == 200)
+    {
+      req.session.userId = result.user.u_id;
+      res.status(200).json(result.user);
+    }
+    else
+    {
+      res.status(result.code).json(result);
+    }
+    res.status(401).send('Wrong email or password');
   }),
 );
 
