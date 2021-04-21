@@ -120,8 +120,8 @@ async function getUsers() {  //returns all users
   }
 
   async function signIn(uData) {
-    if (uData.u_email && uData.u_password) {
-      const user  = await db.query(`SELECT * from ynot.user WHERE u_email == $1`, [uData.u_email],);
+    if (uData.u_username && uData.u_password) {
+      const user  = await db.query(`SELECT * from ynot.user WHERE u_username == $1`, [uData.u_username],);
       if (user.u_password == uData.u_password) {
         return{
           Code: 200,
@@ -131,7 +131,7 @@ async function getUsers() {  //returns all users
       else{
         return{
           Code: 401,
-          data: 'Wrong Email or Password',
+          data: 'Wrong username or Password',
         }
       }
      } 

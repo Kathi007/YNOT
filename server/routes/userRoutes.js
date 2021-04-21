@@ -116,6 +116,7 @@ router.delete(
   }),
 );
 
+/*
 router.post('/login', (req, res) => {
   // enter your code here
   //wird vom Frontend gegeben
@@ -139,6 +140,7 @@ router.get('/logout', redirectLogin, (req, res) => {
   req.session.destroy();
   res.clearCookie(process.env.SESSION_NAME);
 });
+*/
 
 //user wird hinzugefügt
 router.post(

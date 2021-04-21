@@ -218,11 +218,11 @@ export default {
     async login() {
       try {
         let res = await axios({
-          url: '/login',
+          url: '/users/signin',
           method: 'post',
           data: {
-            username: this.username,
-            password: this.password,
+            u_username: this.username,
+            u_password: this.password,
           },
         });
         this.$router.push('/home');
