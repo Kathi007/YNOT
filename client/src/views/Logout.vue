@@ -5,7 +5,7 @@
         <router-link to="/">Back to Login Page</router-link> | <router-link to="/login">Login</router-link>
       </div>
       <h5 class="text-center my-3 text-danger">
-        Your are logged out!
+        You are are logged out!
       </h5>
       <p class="text-center mt-3">Bye!</p>
     </div>

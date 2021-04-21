@@ -12,11 +12,12 @@ const matchRoutes = require('./routes/matchRoutes');
 const cookieParser = require('cookie-parser');
 const history = require('connect-history-api-fallback');
 const session = require('express-session');
+const app = express();
 
 const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
-require('dotenv').config();
 
-const app = express();
+require('dotenv').config({ path: __dirname + '/.env' });
+
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(history());
@@ -28,7 +29,6 @@ app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, '/public'))); //Full system path to public folder, where webapp BE is saved
 app.use(helmet());
 app.use(express.json());
-
 const {
   PORT,
   NODE_ENV,

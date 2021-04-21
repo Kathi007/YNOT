@@ -8,9 +8,6 @@
               <v-list-item-title>Profile</v-list-item-title>
             </v-list-item>
             <v-list-item>
-              <v-list-item-title>Sign Up</v-list-item-title>
-            </v-list-item>
-            <v-list-item>
               <v-list-item-title>Messages</v-list-item-title>
             </v-list-item>
           </v-list-item-group>
@@ -43,25 +40,6 @@
         <v-spacer></v-spacer>
         <span class="hidden-xs-only">
           <v-btn to="/profile" color="grey" text>Profile</v-btn>
-          <v-menu offset-y>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn color="grey" text v-bind="attrs" v-on="on">
-                Sign Up
-              </v-btn>
-            </template>
-            <v-list>
-              <v-list-item>
-                <v-list-item-action>
-                  <v-btn text>User</v-btn>
-                </v-list-item-action>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-action>
-                  <v-btn text>Project</v-btn>
-                </v-list-item-action>
-              </v-list-item>
-            </v-list>
-          </v-menu>
 
           <v-btn to="/chat" color="grey" text>Messages</v-btn>
         </span>
@@ -128,7 +106,7 @@
           </v-card>
         </v-dialog>
       </v-app-bar>
-      
+
       <v-main>
         <v-switch
           style="float:right;"
@@ -181,6 +159,7 @@ export default {
     async getUsers() {
       try {
         let res = await axios({
+          // url: 'http://193.170.162.166:3001/users',
           url: 'http://127.0.0.1:3001/users',
           method: 'get',
         });
@@ -195,6 +174,7 @@ export default {
       try {
         let res = await axios({
           url: 'http://127.0.0.1:3001/projects',
+          // url: '/projects',
           method: 'get',
         });
         this.projects = res.data.data;

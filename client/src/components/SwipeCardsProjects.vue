@@ -1,6 +1,5 @@
 <template>
   <section class="container">
-    <!-- <p>{{testingcards}}</p> -->
     <div
       v-if="current"
       class="fixed fixed--center"
@@ -21,8 +20,6 @@
         class="rounded-borders card card--one"
       >
         <div style="height: 100%">
-          <!-- <img :src="current.image" class="rounded-borders" /> -->
-
           <div class="text">
             <v-card-title primary-title>
               {{ current.p_name }}
@@ -30,8 +27,8 @@
             <v-card-title class="subtitle-1">
               Coding languages required:
             </v-card-title>
-            <v-card-text>
-              {{ current.p_zip_code }}
+            <v-card-text class="grey--text">
+              {{ current.pl_name }}
             </v-card-text>
             <v-divider></v-divider>
             <v-card-title class="subtitle-1">
@@ -49,7 +46,7 @@
                 color="purple"
                 outlined
                 width="75%"
-                :to="`/detail/${current.p_projectid}`"
+                :to="`/detailproject/${current.p_projectid}`"
                 >KNOW MORE</v-btn
               >
             </v-card-actions>
@@ -69,11 +66,13 @@
           <v-card-title primary-title>
             {{ next.p_name }}
           </v-card-title>
+                    <div class="py-12"></div>
+
           <v-card-title class="subtitle-1">
             Coding languages required:
           </v-card-title>
-          <v-card-text>
-            {{ next.p_zip_code }}
+          <v-card-text class="grey--text">
+            {{ next.pl_name }}
           </v-card-text>
           <v-divider></v-divider>
           <v-card-title class="subtitle-1">
@@ -91,7 +90,7 @@
               color="purple"
               outlined
               width="75%"
-              :to="`/detail/${next.p_projectid}`"
+              :to="`/detailprojects/${next.p_projectid}`"
               >KNOW MORE</v-btn
             >
           </v-card-actions>

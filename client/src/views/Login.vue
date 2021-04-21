@@ -48,17 +48,14 @@
                       </span>
 
                       <br />
-
-                      <span
-                        :class="[
-                          $vuetify.breakpoint.smAndDown
-                            ? 'display-3'
-                            : 'display-4',
-                        ]"
-                        class="font-weight-black"
-                      >
-                        YNOTCOLLAB?
-                      </span>
+                      <v-img
+                        src="../assets/Logo-weiß.svg"
+                        width="55%"
+                        :style="{
+                          left: '50%',
+                          transform: 'translateX(-50%)',
+                        }"
+                      ></v-img>
                     </v-col>
 
                     <v-btn
@@ -126,7 +123,10 @@
           <div class="py-12"></div>
           <v-sheet color="#333333" tile>
             <v-container id="signinup-form" class="text-center">
-              <h2 class="display-2 font-weight-bold mb-3" style="color:white;">
+              <h2
+                class="display-2 font-weight-bold mb-3 mt-3"
+                style="color:white;"
+              >
                 LOG IN
               </h2>
 
@@ -137,30 +137,43 @@
               </v-responsive>
               <v-row align="center" justify="center" no-gutters>
                 <v-col cols="12" sm="8">
-                  <form @submit.prevent="login">
+                  <form>
                     <v-card>
+                      <v-card-title
+                        primary-title
+                        class="pink darken-3 justify-center white--text mb-4"
+                      >
+                        Welcome back!
+                      </v-card-title>
                       <v-card-text>
                         <v-form>
                           <v-text-field
-                            label="Email"
-                            name="email"
-                            type="email"
-                            v-model="email"
-                            color="teal accent-3"
+                            label="Username"
+                            prepend-icon="mdi-account-outline"
+                            name="username"
+                            type="username"
+                            v-model="username"
+                            color="pink darken-3"
                           />
 
                           <v-text-field
                             id="password"
                             label="Password"
+                            prepend-icon="mdi-lock-outline"
                             name="password"
                             type="password"
                             v-model="password"
-                            color="teal accent-3"
+                            color="pink darken-3"
                           />
                         </v-form>
                         <p class="mt-4 text-center">
                           No account? <a href="/register">Register here!</a>
                         </p>
+                        <!-- <div>
+                        <button class="btn btn-primary">
+                          LOG IN
+                        </button>
+                      </div> -->
                       </v-card-text>
                       <v-card-actions>
                         <v-btn
@@ -171,7 +184,9 @@
                           color="purple"
                           width="50%"
                           dark
+                          to="/home"
                           >LOG IN</v-btn
+                        >
                         >
                       </v-card-actions>
                     </v-card>
@@ -195,14 +210,14 @@
 </template>
 
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 /* eslint-disable */
 
 export default {
   data() {
     return {
-      email: '',
-      password: '',
+      username: 'Joshua48',
+      password: 'abc',
     };
   },
   methods: {
@@ -212,12 +227,11 @@ export default {
           url: '/login',
           method: 'post',
           data: {
-            email: this.email,
-            password: this.password,
+            u_username: this.username,
+            u_password: this.password,
           },
         });
         this.$router.push('/home');
-        console.log(res.data);
         localStorage.setItem('id', res.data.id);
         localStorage.setItem('name', res.data.name);
         console.log(res.data);
