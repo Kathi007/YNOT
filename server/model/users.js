@@ -105,6 +105,7 @@ async function getUsers() {  //returns all users
       };
   }
 
+
   async function insertUser(u) {    // create new user
     await db.query(
       `INSERT INTO user (u_firstname, u_surename, u_email, u_password, u_country, u_expected_salary, u_full_time
@@ -119,35 +120,27 @@ async function getUsers() {  //returns all users
   }
 
   async function signIn(uData) {
-    //check if username & password match
-    const { rows }  = await db.query(`PASSWORD QUERY FOR UNAME`, [uData.u_userid],);
-    if(rows[0] == uData.u_password)
-    {
-      const {userinfo} = await getUserByName(uData.u_username);
-      if(userinfo.code != 404)
-      {
-        return {
-          code: 200,
-          data: userinfo,
-        };
+    if (uData.u_email && uData.u_password) {
+      const user  = await db.query(`SELECT * from ynot.user WHERE u_email == $1`, [uData.u_email],);
+      if (user.u_password == uData.u_password) {
+        return{
+          Code: 200,
+          data: user,
+        }
       }
-      else
-      {
-        return {
-          code: 500,
-          data: 'Server Error',
-        };
+      else{
+        return{
+          Code: 401,
+          data: 'Wrong Email or Password',
+        }
       }
-    }
-
-    else
-    {
-      return {
-        code: 403,
-        data: 'Invalid credentials',
-      };    
-    }
-    
+     } 
+     else{
+       return{
+         Code: 400,
+         data: 'Login failed',
+       }
+      }
   }
 
   async function patchUser(username, data) {   //Change existing User
