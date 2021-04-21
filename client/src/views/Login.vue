@@ -52,8 +52,8 @@
                       <span
                         :class="[
                           $vuetify.breakpoint.smAndDown
-                            ? 'display-3'
-                            : 'display-4',
+                            ? 'display-1'
+                            : 'display-2',
                         ]"
                         class="font-weight-black"
                       >
@@ -126,7 +126,10 @@
           <div class="py-12"></div>
           <v-sheet color="#333333" tile>
             <v-container id="signinup-form" class="text-center">
-              <h2 class="display-2 font-weight-bold mb-3" style="color:white;">
+              <h2
+                class="display-2 font-weight-bold mb-3 mt-3"
+                style="color:white;"
+              >
                 LOG IN
               </h2>
 
@@ -139,19 +142,27 @@
                 <v-col cols="12" sm="8">
                   <form @submit.prevent="login">
                     <v-card>
+                      <v-card-title
+                        primary-title
+                        class="pink darken-3 justify-center white--text mb-4"
+                      >
+                        Welcome back!
+                      </v-card-title>
                       <v-card-text>
                         <v-form>
                           <v-text-field
-                            label="Email"
-                            name="email"
-                            type="email"
-                            v-model="email"
+                            label="Username"
+                            prepend-icon="mdi-account-outline"
+                            name="username"
+                            type="username"
+                            v-model="username"
                             color="pink darken-3"
                           />
 
                           <v-text-field
                             id="password"
                             label="Password"
+                            prepend-icon="mdi-lock-outline"
                             name="password"
                             type="password"
                             v-model="password"

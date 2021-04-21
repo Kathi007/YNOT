@@ -11,7 +11,12 @@ async function getUsers() {  //returns all users
   }
   
   async function getUser(id) {   //returns user with specific username
-    const { rows } = await db.query('SELECT * FROM ynot.user WHERE u_userid = $1 join user_pl using(u_userid) join programming_language using(pl_id)', [id]);
+    const {
+      rows,
+    } = await db.query(
+      'SELECT * FROM ynot.user join user_pl using(u_userid) join programming_language using(pl_id) WHERE u_userid = $1',
+      [id],
+    );
     if (rows.length > 0)
       return {
         code: 200,

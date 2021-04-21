@@ -4,7 +4,8 @@ import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
 import Account from '../views/Account.vue';
 import Chat from '../views/Chat.vue';
-import Detail from '../views/Details.vue';
+import DetailProject from '../views/DetailsProject.vue';
+import DetailUser from '../views/DetailsUser.vue';
 import Logout from '../views/Logout.vue';
 
 Vue.use(VueRouter);
@@ -24,9 +25,15 @@ const routes = [
   },
 
   {
-    path: '/detail/:id',
-    name: 'Detail',
-    component: Detail,
+    path: '/detailproject/:id',
+    name: 'DetailProject',
+    component: DetailProject,
+    props: true,
+  },
+  {
+    path: '/detailuser/:id',
+    name: 'DetailUser',
+    component: DetailUser,
     props: true,
   },
   {

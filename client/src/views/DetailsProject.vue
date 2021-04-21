@@ -1,5 +1,5 @@
 <template>
-  <div class="bg">
+  <div class="container d-flex flex-column min-vh-100">
     <v-app>
       <v-navigation-drawer v-model="sidebar" app fixed temporary>
         <v-list nav dense>
@@ -46,29 +46,53 @@
         </span>
       </v-app-bar>
 
-      <h1 class="text-center my-3">{{ user.name }}'s Account</h1>
-      <div class="mx-auto d-block">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/logout">Logout</router-link>
-      </div>
+      <v-main>
+        <!-- <div class="col-8 d-flex flex-column justify-content-center">
+          <h1>{{ projects.p_name }}</h1>
+        </div> -->
+
+        <v-main class="elevation-1">
+          <div class="col-8 d-flex flex-column justify-content-center ">
+            <h1>{{ projects.p_name }}</h1>
+            <p class="subtitle-1">Programming languages required:</p>
+            <p class="body-2 grey--text">{{ projects.pl_name }}</p>
+            <p class="subtitle-1">Language:</p>
+            <p class="body-2 grey--text">{{ projects.p_language }}</p>
+            <p class="subtitle-1">Country:</p>
+            <p class="body-2 grey--text">{{ projects.p_country }}</p>
+            <p class="subtitle-1">Time Zone:</p>
+            <p class="body-2 grey--text">{{ projects.p_time_zone }}</p>
+            <p class="subtitle-1">Short Description:</p>
+            <p class="body-2 grey--text">{{ projects.p_short_description }}</p>
+          </div>
+          <div class="col-8">
+            <v-btn to="/home" dark color="purple">Back</v-btn>
+          </div>
+        </v-main>
+      </v-main>
     </v-app>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
+  props: {
+    id: {
+      type: String,
+    },
+  },
   data() {
     return {
+      projects: [],
       sidebar: false,
-      user: {
-        id: '',
-        name: '',
-      },
     };
   },
   async created() {
-    this.user.id = localStorage.getItem('id');
-    this.user.name = localStorage.getItem('name');
+    let res = await axios(`http://127.0.0.1:3001/projects/${this.id}`);
+    this.projects = res.data.data;
+    console.log(this.projects);
   },
 };
 </script>

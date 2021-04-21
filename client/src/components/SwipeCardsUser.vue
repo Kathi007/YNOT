@@ -27,21 +27,15 @@
             <v-card-title class="subtitle-1">
               Coding languages:
             </v-card-title>
-            <v-card-text>
-              LOREM IPSUM
-            </v-card-text>
-            <v-card-title class="subtitle-1">
-              Contact:
-            </v-card-title>
-            <v-card-text>
-              {{ current.u_email }}
+            <v-card-text class="grey--text">
+              {{ current.pl_name }}
             </v-card-text>
             <v-divider></v-divider>
             <v-card-title class="subtitle-1">
-              Short description:
+              Short introduction:
             </v-card-title>
             <v-card-text>
-              {{ next.p_short_description }}
+              {{ current.u_about_me }}
             </v-card-text>
 
             <v-card-actions>
@@ -52,7 +46,7 @@
                 color="purple"
                 outlined
                 width="75%"
-                :to="`/detail/${current.u_userid}`"
+                :to="`/detailuser/${current.u_userid}`"
                 >KNOW MORE</v-btn
               >
             </v-card-actions>
@@ -66,8 +60,6 @@
       style="z-index: 2"
     >
       <div style="height: 100%">
-        <!-- <img :src="current.image" class="rounded-borders" /> -->
-
         <div class="text">
           <v-card-title primary-title>
             {{ next.u_firstname }} {{ next.u_surename }}
@@ -75,21 +67,16 @@
           <v-card-title class="subtitle-1">
             Coding languages:
           </v-card-title>
-          <v-card-text>
-            LOREM IPSUM
+          <v-card-text class="grey--text">
+            {{ next.pl_name }}
           </v-card-text>
-          <v-card-title class="subtitle-1">
-            Contact:
-          </v-card-title>
-          <v-card-text>
-            {{ next.u_email }}
-          </v-card-text>
+
           <v-divider></v-divider>
           <v-card-title class="subtitle-1">
             Short description:
           </v-card-title>
           <v-card-text>
-            {{ next.p_short_description }}
+            {{ next.u_about_me }}
           </v-card-text>
 
           <v-card-actions>
