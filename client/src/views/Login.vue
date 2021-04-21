@@ -48,17 +48,14 @@
                       </span>
 
                       <br />
-
-                      <span
-                        :class="[
-                          $vuetify.breakpoint.smAndDown
-                            ? 'display-1'
-                            : 'display-2',
-                        ]"
-                        class="font-weight-black"
-                      >
-                        YNOTCOLLAB?
-                      </span>
+                      <v-img
+                        src="../assets/Logo-weiß.svg"
+                        width="55%"
+                        :style="{
+                          left: '50%',
+                          transform: 'translateX(-50%)',
+                        }"
+                      ></v-img>
                     </v-col>
 
                     <v-btn

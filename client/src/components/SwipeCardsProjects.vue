@@ -66,6 +66,8 @@
           <v-card-title primary-title>
             {{ next.p_name }}
           </v-card-title>
+                    <div class="py-12"></div>
+
           <v-card-title class="subtitle-1">
             Coding languages required:
           </v-card-title>

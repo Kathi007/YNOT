@@ -46,22 +46,65 @@
         </span>
       </v-app-bar>
 
-      <v-main class="elevation-1">
-        <div class="col-8 d-flex flex-column justify-content-center ">
+      <v-main class="elevation-1" height="100%">
+        <div
+          class="col-8 d-flex flex-column justify-content-center"
+          fill-height
+        >
           <h1>{{ users.u_firstname }} {{ users.u_surename }}</h1>
-          <p class="subtitle-1">Programming languages mastered:</p>
-          <p class="body-2 grey--text">{{ users.pl_name }}</p>
-          <p class="subtitle-1">Contact:</p>
-          <p class="body-2 grey--text">{{ users.u_email }}</p>
-          <p class="subtitle-1">Country:</p>
-          <p class="body-2 grey--text">{{ users.u_country }}</p>
-          <p class="subtitle-1">Time Zone:</p>
-          <p class="body-2 grey--text">{{ users.u_time_zone }}</p>
-          <p class="subtitle-1">Short Introduction::</p>
-          <p class="body-2 grey--text">{{ users.u_about_me }}</p>
-        </div>
-        <div class="col-8">
-          <v-btn to="/home" dark color="purple">Back</v-btn>
+          <v-divider></v-divider>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title
+                >Programming languages mastered:</v-list-item-title
+              >
+              <v-list-item-subtitle class="body-2 grey--text">{{
+                users.pl_name
+              }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Contact:</v-list-item-title>
+              <v-list-item-subtitle class="body-2 grey--text">{{
+                users.u_email
+              }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Country:</v-list-item-title>
+              <v-list-item-subtitle class="body-2 grey--text">{{
+                users.u_country
+              }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Time Zone:</v-list-item-title>
+              <v-list-item-subtitle class="body-2 grey--text">{{
+                users.u_time_zone
+              }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Short Introduction:</v-list-item-title>
+              <v-list-item-subtitle class="body-2 grey--text">{{
+                users.u_about_me
+              }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item>
+            <v-list-tile-action>
+              <v-btn to="/home" dark color="purple">Back</v-btn>
+            </v-list-tile-action>
+          </v-list-item>
         </div>
       </v-main>
     </v-app>

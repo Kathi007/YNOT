@@ -46,29 +46,69 @@
         </span>
       </v-app-bar>
 
-      <v-main>
-        <!-- <div class="col-8 d-flex flex-column justify-content-center">
+      <!-- <div class="col-8 d-flex flex-column justify-content-center">
           <h1>{{ projects.p_name }}</h1>
         </div> -->
 
-        <v-main class="elevation-1">
-          <div class="col-8 d-flex flex-column justify-content-center ">
-            <h1>{{ projects.p_name }}</h1>
-            <p class="subtitle-1">Programming languages required:</p>
-            <p class="body-2 grey--text">{{ projects.pl_name }}</p>
-            <p class="subtitle-1">Language:</p>
-            <p class="body-2 grey--text">{{ projects.p_language }}</p>
-            <p class="subtitle-1">Country:</p>
-            <p class="body-2 grey--text">{{ projects.p_country }}</p>
-            <p class="subtitle-1">Time Zone:</p>
-            <p class="body-2 grey--text">{{ projects.p_time_zone }}</p>
-            <p class="subtitle-1">Short Description:</p>
-            <p class="body-2 grey--text">{{ projects.p_short_description }}</p>
-          </div>
-          <div class="col-8">
-            <v-btn to="/home" dark color="purple">Back</v-btn>
-          </div>
-        </v-main>
+      <v-main class="elevation-1" height="100%">
+        <div class="col-8 d-flex flex-column justify-content-center ">
+          <h1>{{ projects.p_name }}</h1>
+          <v-divider></v-divider>
+
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title
+                >Programming languages required:</v-list-item-title
+              >
+              <v-list-item-subtitle class="body-2 grey--text">{{
+                projects.pl_name
+              }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Language:</v-list-item-title>
+              <v-list-item-subtitle class="body-2 grey--text">{{
+                projects.p_language
+              }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Country:</v-list-item-title>
+              <v-list-item-subtitle class="body-2 grey--text">{{
+                projects.p_country
+              }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Time Zone:</v-list-item-title>
+              <v-list-item-subtitle class="body-2 grey--text">{{
+                projects.p_time_zone
+              }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider></v-divider>
+
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Short description:</v-list-item-title>
+              <v-list-item-subtitle class="body-2 grey--text">{{
+                projects.p_short_description
+              }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item>
+            <v-list-tile-action>
+              <v-btn to="/home" dark color="purple">Back</v-btn>
+            </v-list-tile-action>
+          </v-list-item>
+        </div>
       </v-main>
     </v-app>
   </div>
