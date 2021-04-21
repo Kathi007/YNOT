@@ -31,14 +31,6 @@ app.use(express.static(path.join(__dirname, '/public'))); //Full system path to 
 app.use(helmet());
 app.use(express.json());
 
-const {
-  PORT,
-  NODE_ENV,
-  SESSION_LIFETIME,
-  SESSION_NAME,
-  SESSION_SECRET,
-} = process.env;
-
 // Register middleware for express sessions here
 app.use(
   session({
@@ -64,6 +56,6 @@ app.use(errorHandler);
 // const PORT = process.env.PORT || 5000;
 
 // app.listen(PORT);
-app.listen(PORT ?? 5000);
+app.listen(process.env.PORT ?? 5000);
 
 console.log(`Server running on port ${process.env.PORT}`);
