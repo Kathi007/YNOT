@@ -1,11 +1,20 @@
 <template>
   <div id="app">
-    <p>chat</p>
+    <MessageView/>
   </div>
 </template>
 
+
+
 <script>
-export default {};
+import MessageView from '@/components/MessageView.vue';
+
+export default {
+  components: {
+    MessageView,
+  },
+};
+
 </script>
 
 <style lang="scss" scoped></style>

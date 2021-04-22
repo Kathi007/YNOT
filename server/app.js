@@ -13,6 +13,7 @@ const cookieParser = require('cookie-parser');
 const history = require('connect-history-api-fallback');
 const session = require('express-session');
 const app = express();
+const wsServer = require('./websockets/index.js')
 
 const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
 
@@ -61,6 +62,8 @@ app.use(errorHandler);
 // const PORT = process.env.PORT || 5000;
 
 // app.listen(PORT);
-app.listen(PORT ?? 5000);
+// app.listen(PORT ?? 5000);
+const httpServer = app.listen(PORT);
+wsServer(httpServer)
 
 console.log(`Server running on port ${process.env.PORT}`);
