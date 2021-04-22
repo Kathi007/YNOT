@@ -11,12 +11,7 @@ async function getProjects() {  //returns all projects
   }
   
   async function getProject(id) {   //returns project with specific ID
-    const {
-      rows,
-    } = await db.query(
-      'SELECT * FROM ynot.project join ynot.project_pl on (p_projectid=p_id) join ynot.programming_language using(pl_id) WHERE p_projectid = $1',
-      [id],
-    );
+    const { rows } = await db.query('SELECT * FROM ynot.project join ynot.project_pl on (p_projectid=p_id) join ynot.programming_language using(pl_id) WHERE p_projectid = $1 ', [id]);
     if (rows.length > 0)
       return {
         code: 200,
