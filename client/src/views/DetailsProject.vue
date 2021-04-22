@@ -51,8 +51,9 @@
         </div> -->
 
       <v-main class="elevation-1" height="100%">
-        <div class="col-8 d-flex flex-column justify-content-center ">
-          <h1>{{ projects.p_name }}</h1>
+
+        <div class="d-flex flex-column justify-content-center ">
+          <h1 class="ml-3">{{ projects.p_name }}</h1>
           <v-divider></v-divider>
 
           <v-list-item>

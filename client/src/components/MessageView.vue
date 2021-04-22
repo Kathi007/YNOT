@@ -1,56 +1,80 @@
 <template>
   <div>
-    <v-app>
-    <v-container>
-      <h1 class="text-center">Chatroom</h1>
-      <div>
-        <v-card class="mb-12" height="500px" elevation="2">
-          <v-card-text>
-            <v-list v-for="(m, i) in history" :key="i">
-              <v-list-item>
-                <v-chip v-if="currentUsername != m.username">
-                  {{ m.username }}: {{ m.text }}
-                </v-chip>
-                <v-spacer></v-spacer>
-                <v-chip
-                  color="blue"
-                  text-color="white"
-                  v-if="currentUsername == m.username"
-                >
-                  {{ m.username }}: {{ m.text }}
-                </v-chip>
-              </v-list-item>
-            </v-list>
-          </v-card-text>
-        </v-card>
-        <p v-if="usernameEntered == false">{{ usernameText }}</p>
-        <v-row>
-          <v-col cols="6"
-            ><p class="ma-0 pa-0">Your nickname:</p>
-            <v-chip v-if="usernameEntered == true"> {{ username }} </v-chip>
-            <v-text-field
-              class="ma-0 pa-0"
-              v-if="usernameEntered == false"
-              dense
-              outlined
-              v-model="username"
-              @keyup.enter="registeredUsername"
-            ></v-text-field
-          ></v-col>
-          <v-col cols="12" v-if="usernameEntered == true"
-            ><p class="ma-0 pa-0">Enter message below:</p>
-            <v-text-field
-              class="ma-0 pa-0"
-              v-model="message"
-              @keyup.enter="sendMessage"
-              dense
-              outlined
-            ></v-text-field
-            ><v-btn @click="sendMessage" class="ma-0 pa-0">Send</v-btn></v-col
-          >
-        </v-row>
-      </div>
-    </v-container>
+    <v-app class="app">
+      <v-app-bar
+        color="grey lighten-5"
+        dark
+        app
+        class="default-layout__navbar"
+        extended
+        extension-height="3"
+      >
+        <div class="d-flex align-center">
+          <v-img
+            alt="YNOTCOLLAB Logo"
+            class="shrink mr-2"
+            contain
+            src="../assets/Logo-gradient.svg"
+            transition="scale-transition"
+            width="230"
+          />
+        </div>
+        <v-spacer></v-spacer>
+        <span class="hidden-xs-only">
+          <v-btn to="/home" color="purple" text>Home</v-btn>
+        </span>
+      </v-app-bar>
+
+      <v-container class="mt-15">
+        <h1 class="text-center">Chatroom</h1>
+        <div>
+          <v-card class="mb-12" height="500px" elevation="2">
+            <v-card-text>
+              <v-list v-for="(m, i) in history" :key="i">
+                <v-list-item>
+                  <v-chip v-if="currentUsername != m.username">
+                    {{ m.username }}: {{ m.text }}
+                  </v-chip>
+                  <v-spacer></v-spacer>
+                  <v-chip
+                    color="blue"
+                    text-color="white"
+                    v-if="currentUsername == m.username"
+                  >
+                    {{ m.username }}: {{ m.text }}
+                  </v-chip>
+                </v-list-item>
+              </v-list>
+            </v-card-text>
+          </v-card>
+          <p v-if="usernameEntered == false">{{ usernameText }}</p>
+          <v-row>
+            <v-col cols="6"
+              ><p class="ma-0 pa-0">Your nickname:</p>
+              <v-chip v-if="usernameEntered == true"> {{ username }} </v-chip>
+              <v-text-field
+                class="ma-0 pa-0"
+                v-if="usernameEntered == false"
+                dense
+                outlined
+                v-model="username"
+                @keyup.enter="registeredUsername"
+              ></v-text-field
+            ></v-col>
+            <v-col cols="12" v-if="usernameEntered == true"
+              ><p class="ma-0 pa-0">Enter message below:</p>
+              <v-text-field
+                class="ma-0 pa-0"
+                v-model="message"
+                @keyup.enter="sendMessage"
+                dense
+                outlined
+              ></v-text-field
+              ><v-btn @click="sendMessage" class="ma-0 pa-0">Send</v-btn></v-col
+            >
+          </v-row>
+        </div>
+      </v-container>
     </v-app>
   </div>
 </template>
@@ -64,47 +88,45 @@ export default {
       username: null,
       currentUsername: null,
       usernameEntered: false,
-      usernameText: "ENTER to register Username",
+      usernameText: 'ENTER to register Username',
     };
   },
   methods: {
     sendPm() {
-      let command = ''
-      let splitMessage = this.message.split('')
-      console.log(splitMessage)
-      if(splitMessage[0] == "/"){
-        console.log("command registered")
-        if(command.concat(splitMessage[1], splitMessage[2]) === 'pm'){
-          console.log("Private Message Registered")
-          
-        }
-        else{
-          console.log("please type in a valid command!")
+      let command = '';
+      let splitMessage = this.message.split('');
+      console.log(splitMessage);
+      if (splitMessage[0] == '/') {
+        console.log('command registered');
+        if (command.concat(splitMessage[1], splitMessage[2]) === 'pm') {
+          console.log('Private Message Registered');
+        } else {
+          console.log('please type in a valid command!');
         }
       }
     },
     sendMessage() {
-      this.sendPm()
+      this.sendPm();
       this.ws.send(
-        JSON.stringify({ username: this.username, text: this.message })
+        JSON.stringify({ username: this.username, text: this.message }),
       );
     },
     registeredUsername() {
       if (this.username == null)
-        this.usernameText = "Please enter a valid username";
+        this.usernameText = 'Please enter a valid username';
       else this.usernameEntered = true;
       this.currentUsername = this.username;
     },
   },
   created() {
-    this.ws = new WebSocket("ws://localhost:3001");
+    this.ws = new WebSocket('ws://localhost:3001');
 
     this.ws.onopen = () => {
-      console.log("Connection opened");
+      console.log('Connection opened');
     };
 
     this.ws.onclose = () => {
-      console.log("Connection closed");
+      console.log('Connection closed');
     };
 
     this.ws.onmessage = (event) => {
@@ -124,5 +146,11 @@ export default {
 .v-card__text {
   flex-grow: 1;
   overflow: auto;
+}
+.app {
+  background-image: url('../assets/background.png');
+  background-position: bottom;
+  background-size: 110%;
+  background-repeat: no-repeat;
 }
 </style>

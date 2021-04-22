@@ -36,6 +36,7 @@
             src="../assets/Logo-gradient.svg"
             transition="scale-transition"
             width="230"
+            
           />
         </div>
 
@@ -47,7 +48,7 @@
       </v-app-bar>
       <br />
       <br /><br />
-      <h1 class="text-center my-3">{{ user.name }} Joshua48's Account</h1>
+      <h1 class="text-center my-3"> Joshua48's Account</h1>
       <div class="mx-auto d-block">
         <router-link to="/home">Home</router-link> |
         <router-link to="/logout">Logout</router-link>

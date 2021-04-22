@@ -48,10 +48,10 @@
 
       <v-main class="elevation-1" height="100%">
         <div
-          class="col-8 d-flex flex-column justify-content-center"
+          class=" d-flex flex-column justify-content-center"
           fill-height
         >
-          <h1>{{ users.u_firstname }} {{ users.u_surename }}</h1>
+          <h1 class="ml-3">{{ users.u_firstname }} {{ users.u_surename }}</h1>
           <v-divider></v-divider>
           <v-list-item>
             <v-list-item-content>
@@ -69,6 +69,15 @@
               <v-list-item-title>Contact:</v-list-item-title>
               <v-list-item-subtitle class="body-2 grey--text">{{
                 users.u_email
+              }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Expected Salary:</v-list-item-title>
+              <v-list-item-subtitle class="body-2 grey--text">${{
+                users.u_expected_salary
               }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
