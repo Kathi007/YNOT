@@ -151,8 +151,9 @@
                         color="purple"
                         width="50%"
                         dark
+                        to="/"
                         >SIGN UP</v-btn
-                      >
+                      > 
                     </v-card-actions>
                   </v-card>
                 </form>

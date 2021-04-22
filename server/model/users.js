@@ -121,26 +121,28 @@ async function getUsers() {  //returns all users
 
   async function signIn(uData) {
     if (uData.u_username && uData.u_password) {
-      const user  = await db.query(`SELECT * from ynot.user WHERE u_username == $1`, [uData.u_username],);
+      //(uData.u_username && uData.u_password)
+      const user = await db.query(
+        `SELECT * from ynot.user WHERE u_username = $1`,
+        [uData.u_username],
+      );
       if (user.u_password == uData.u_password) {
-        return{
+        return {
           Code: 200,
           data: user,
-        }
-      }
-      else{
-        return{
+        };
+      } else {
+        return {
           Code: 401,
           data: 'Wrong username or Password',
-        }
+        };
       }
-     } 
-     else{
-       return{
-         Code: 400,
-         data: 'Login failed',
-       }
-      }
+    } else {
+      return {
+        Code: 400,
+        data: 'Login failed',
+      };
+    }
   }
 
   async function patchUser(username, data) {   //Change existing User

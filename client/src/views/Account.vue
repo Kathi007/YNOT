@@ -1,6 +1,6 @@
 <template>
-  <div class="bg">
-    <v-app>
+  <div class="bg" id="app">
+    <v-app >
       <v-navigation-drawer v-model="sidebar" app fixed temporary>
         <v-list nav dense>
           <v-list-item-group>
@@ -41,14 +41,15 @@
 
         <v-spacer></v-spacer>
         <span class="hidden-xs-only">
-          <v-btn to="/profile" color="grey" text>Profile</v-btn>
+          <v-btn color="grey" text>Profile</v-btn>
           <v-btn to="/chat" color="grey" text>Messages</v-btn>
         </span>
       </v-app-bar>
-
-      <h1 class="text-center my-3">{{ user.name }}'s Account</h1>
+      <br />
+      <br /><br />
+      <h1 class="text-center my-3">{{ user.name }} Joshua48's Account</h1>
       <div class="mx-auto d-block">
-        <router-link to="/">Home</router-link> |
+        <router-link to="/home">Home</router-link> |
         <router-link to="/logout">Logout</router-link>
       </div>
     </v-app>

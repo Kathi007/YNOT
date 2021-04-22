@@ -184,7 +184,7 @@
                           color="purple"
                           width="50%"
                           dark
-                          to="/home"
+                          @click="login"
                           >LOG IN</v-btn
                         >
                         >

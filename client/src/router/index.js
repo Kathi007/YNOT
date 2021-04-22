@@ -9,10 +9,10 @@ import DetailUser from '../views/DetailsUser.vue';
 import Logout from '../views/Logout.vue';
 
 Vue.use(VueRouter);
-function isAuthenticated() {
-  if (Vue.$cookies.get('sid')) return true;
-  else return false;
-}
+// function isAuthenticated() {
+//   if (Vue.$cookies.get('sid')) return true;
+//   else return false;
+// }
 const routes = [
   {
     path: '/home',
@@ -55,10 +55,10 @@ const routes = [
     path: '/account',
     name: 'Account',
     component: Account,
-    beforeEnter: (to, from, next) => {
-      if (!isAuthenticated()) next({ name: 'Login' });
-      next();
-    },
+    // beforeEnter: (to, from, next) => {
+    //   if (!isAuthenticated()) next({ name: 'Login' });
+    //   next();
+    // },
   },
   {
     path: '/chat',

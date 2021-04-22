@@ -85,7 +85,7 @@ router.post(
 router.post(
   '/login',
   asyncHandler(async (req, res) => {
-    const result = await signIn(req.body.data);    
+    const result = await signIn(req.body);    
     if (result) {
       req.session.userId = result.u_userid;
       res.status(200).json({ id: result.u_userid, name: result.u_username });

@@ -41,7 +41,7 @@
 
         <v-spacer></v-spacer>
         <span class="hidden-xs-only">
-          <v-btn to="/profile" color="grey" text>Profile</v-btn>
+          <v-btn to="/account" color="grey" text>Profile</v-btn>
           <v-btn to="/chat" color="grey" text>Messages</v-btn>
         </span>
       </v-app-bar>

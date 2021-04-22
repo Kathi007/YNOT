@@ -4,11 +4,11 @@
       <v-navigation-drawer v-model="sidebar" app fixed temporary>
         <v-list nav dense>
           <v-list-item-group>
-            <v-list-item>
+            <v-list-item to="/account">
               <v-list-item-title>Profile</v-list-item-title>
             </v-list-item>
             <v-list-item>
-              <v-list-item-title>Messages</v-list-item-title>
+              <v-list-item-title to="/chat">Messages</v-list-item-title>
             </v-list-item>
           </v-list-item-group>
         </v-list>
@@ -39,7 +39,7 @@
 
         <v-spacer></v-spacer>
         <span class="hidden-xs-only">
-          <v-btn to="/profile" color="grey" text>Profile</v-btn>
+          <v-btn to="/account" color="grey" text>Profile</v-btn>
 
           <v-btn to="/chat" color="grey" text>Messages</v-btn>
         </span>
@@ -70,7 +70,7 @@
             </v-toolbar>
             <template>
               <v-container fluid>
-                <v-subheader>Search by User Ability</v-subheader>
+                <v-subheader>Search by Coding Language</v-subheader>
                 <v-row class="ml-5">
                   <v-col>
                     <v-checkbox
@@ -159,8 +159,7 @@ export default {
     async getUsers() {
       try {
         let res = await axios({
-          // url: 'http://193.170.162.166:3001/users',
-          url: 'http://127.0.0.1:3001/users',
+          url: '/users',
           method: 'get',
         });
         this.users = res.data.data;
@@ -173,8 +172,7 @@ export default {
     async getProjects() {
       try {
         let res = await axios({
-          url: 'http://127.0.0.1:3001/projects',
-          // url: '/projects',
+          url: '/projects',
           method: 'get',
         });
         this.projects = res.data.data;
